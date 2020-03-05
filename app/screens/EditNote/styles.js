@@ -4,24 +4,17 @@ import metrics from 'app/config/metrics'
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
-        width: '100%', height: metrics.screenHeight, 
+        width: '100%', height: '100%', 
     },
     input: {
-        width: metrics.screenWidth * .3,
+        width: metrics.screenWidth * .835,
     },
-    cardStyle:{
-        width: metrics.screenWidth * .95,
-        borderRadius: 4,
-        borderColor: '#F1F2F3',
-        borderWidth: 1.5,
-        elevation: 1.5,
-        padding: 10,
-        marginTop:10,
-        flexDirection: 'row'
+    dateTime: {
+        width: metrics.screenWidth * .4,
     },
     headerStyle:{
         width: '100%',
-        height: 50,
+        height: metrics.screenHeight*.1,
         backgroundColor: '#6200EE',
         flexDirection: 'row',
         alignItems: 'center',
@@ -29,6 +22,7 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     loginBtn: {
+        marginTop:metrics.screenHeight*.1,
         backgroundColor: 'green',
         borderRadius: 3,
         color: '#ffffff',
@@ -40,6 +34,12 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         color: 'white'
+    },
+    seperator: {
+        height: 10,
+    },
+    seperator1: {
+        height: 20,
     },
 });
 

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, Text, TouchableOpacity } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import * as loginActions from 'app/actions/loginActions';
+import { useDispatch, useSelector } from 'react-redux'
+import * as loginActions from 'app/actions/loginActions'
 import styles from './styles';
 import { OutlinedTextField } from 'react-native-material-textfield'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 
 export default function Login() {
@@ -14,7 +15,9 @@ export default function Login() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.headerText}>login</Text>
+            {/* MaterialCommunityIcons */}
+                    
+            <Text style={styles.headerText}><MaterialCommunityIcons name="timetable" size={100} color="white" /></Text>
             <View style={styles.seperator1} />
             <OutlinedTextField
                 containerStyle={styles.input}

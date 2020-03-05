@@ -4,5 +4,8 @@
 import NavigationService from 'app/navigation/NavigationService';
 
 export function navigateToHome(params) {
-  NavigationService.navigate('Home', params);
+    NavigationService.navigate('Home', params);
+}
+export function navigateToAddNote(params) {
+    NavigationService.navigate('AddNote', params);
 }

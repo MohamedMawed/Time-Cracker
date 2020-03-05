@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as loginActions from 'app/actions/loginActions';
 import styles from './styles';
 import { OutlinedTextField } from 'react-native-material-textfield'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 
 export default function Register() {
@@ -15,7 +16,7 @@ export default function Register() {
     return (
         
         <View style={styles.container}>
-            <Text style={styles.headerText}>Register</Text>
+            <Text style={styles.headerText}><MaterialCommunityIcons name="timetable" size={100} color="white" /></Text>
             <View style={styles.seperator} />
             <OutlinedTextField
                 containerStyle={styles.input}
