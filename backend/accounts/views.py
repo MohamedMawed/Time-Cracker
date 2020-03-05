@@ -5,8 +5,7 @@ from rest_framework.response import Response
 from rest_framework import permissions, generics, status
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.settings import api_settings
-from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.permissions import IsAuthenticated, BasePermission
 
 
 
@@ -35,3 +34,24 @@ class Signup(APIView):
                 token = generate_token(user)
                 return Response({"token": token, "id": user.user_id}, status=status.HTTP_201_CREATED)
             return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class NotRegularUser(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_staff or request.user.is_user_manager 
+
+
+
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (NotRegularUser,) 
+
+
+class UserRUD(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (NotRegularUser,) 

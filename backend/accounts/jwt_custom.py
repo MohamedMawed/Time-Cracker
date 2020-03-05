@@ -1,7 +1,7 @@
 from rest_framework_jwt.settings import api_settings
 from calendar import timegm
 from datetime import datetime
-
+from .serializers import UserSerializer
 def jwt_payload_handler(user):
 	name = user.get_full_name()
 	payload =  {
@@ -22,6 +22,7 @@ def jwt_get_username_from_payload(payload):
 	return payload.get("email")
 
 def jwt_response_payload_handler(token, user=None, request=None):
-    return{
+    return {
         'token': token,
+        'user': UserSerializer(user, context={'request': request}).data
     }
