@@ -57,3 +57,26 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+
+
+# Django 
+backend/env/*
+.DS_Store
+*.sqlite
+*.sqlite3
+*/*.sqlite
+*/*.sqlite3
+*.pyc
+__pycache__
+env/*
+bin
+include
+lib
+local
+*/__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
+/media/
+/static/
+.vscode
