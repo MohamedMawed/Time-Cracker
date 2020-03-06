@@ -44,10 +44,10 @@ class NotRegularUser(BasePermission):
 class UserList(generics.ListAPIView):
     queryset = User.objects.filter(is_staff=False)
     serializer_class = UserSerializer
-    permission_classes = (NotRegularUser,IsAuthenticated,) 
+    permission_classes = (IsAuthenticated, NotRegularUser,) 
 
 
 class UserRUD(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.filter(is_staff=False)
     serializer_class = UserSerializer
-    permission_classes = (NotRegularUser,IsAuthenticated,)
+    permission_classes = (IsAuthenticated, NotRegularUser,)

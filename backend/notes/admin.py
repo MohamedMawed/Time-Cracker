@@ -19,7 +19,7 @@ class NoteForm(forms.ModelForm):
 
 
 class NoteAdmin(admin.ModelAdmin):
-    # list_display = ('note','owner', 'start', 'end')
+    list_display = ('note','owner', 'start', 'end')
     form = NoteForm
 
 admin.site.register(Note, NoteAdmin)
