@@ -36,22 +36,18 @@ class Signup(APIView):
             return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
-
+# for filtering the regular users from being able to control the other users
 class NotRegularUser(BasePermission):
     def has_permission(self, request, view):
         return request.user.is_staff or request.user.is_user_manager 
 
-
-
-
-
 class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
+    queryset = User.objects.filter(is_staff=False)
     serializer_class = UserSerializer
-    permission_classes = (NotRegularUser,) 
+    permission_classes = (NotRegularUser,IsAuthenticated,) 
 
 
 class UserRUD(generics.RetrieveUpdateDestroyAPIView):
-    queryset = User.objects.all()
+    queryset = User.objects.filter(is_staff=False)
     serializer_class = UserSerializer
-    permission_classes = (NotRegularUser,) 
+    permission_classes = (NotRegularUser,IsAuthenticated,)
