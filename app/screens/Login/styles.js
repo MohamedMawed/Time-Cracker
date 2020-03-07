@@ -10,38 +10,47 @@ const styles = StyleSheet.create({
     loginBtn: {
         backgroundColor: 'green',
         borderRadius: 3,
-        color:'#ffffff',
+        color: '#ffffff',
         width: metrics.screenWidth * .5,
-        justifyContent:'center',
-        alignItems:'center',
-        height:50
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 50
+    },
+    createAtext: {
+        color: 'blue',
+        textDecorationLine: 'underline',
+        marginTop: 10,
+        backgroundColor: 'lightgray',
+        padding: 5,
+        borderRadius: 4,
+        fontSize: 16,
+        fontWeight: '200',
     },
     headerText: {
-        fontSize : 40,
-        color : 'white',
+        fontSize: 40,
+        color: 'white',
         fontWeight: '200',
         backgroundColor: '#1967D2',
-        borderRadius : 150,
-        padding : 30,
-        textAlign:'center',
-        textAlignVertical:'center',
-        width: metrics.screenWidth*.5,
-        height: metrics.screenWidth*.5,
+        borderRadius: 150,
+        padding: 30,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        width: metrics.screenWidth * .5,
+        height: metrics.screenWidth * .5,
     },
     seperator: {
-        height:10,
+        height: 10,
     },
     seperator1: {
-        height:20,
+        height: 20,
     },
     text: {
-        fontSize:20,
-        color:'white'
+        fontSize: 20,
+        color: 'white'
     },
     input: {
         width: metrics.screenWidth * .7,
-        height: 60,
-
+        height: 50,
     }
 });
 

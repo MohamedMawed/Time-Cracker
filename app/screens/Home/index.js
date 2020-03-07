@@ -3,6 +3,7 @@ import { View, TouchableOpacity, FlatList, ScrollView, Text } from 'react-native
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import ModalDropdown from 'react-native-modal-dropdown'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import Entypo from 'react-native-vector-icons/Entypo'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import styles from './styles'
 import Modal from "react-native-modal"
@@ -77,7 +78,7 @@ export default function Home() {
                         textStyle={{ fontSize: 50, color: 'white', textAlignVertical: 'top', width: '100%', height: 100 }}
                         renderButtonText={() => '...'}
                         Style={{ flex: 2 }}
-                        dropdownStyle={{ height: '18.9%', marginTop: -20 }}
+                        dropdownStyle={{ height: 'auto' }}
                         options={data}
 
                         onSelect={(index, value) => {
@@ -94,7 +95,9 @@ export default function Home() {
                                     return 'foo';
                             }
                         }}
-                    />
+                    >
+                        <Entypo name="dots-three-vertical" size={25} color="white" />
+                    </ModalDropdown>
                 </View>
 
                 {/* this is for the Note Card With Actions */}
@@ -144,7 +147,8 @@ export default function Home() {
                             to: '03/07/2020',
                         },
                     ]}
-                    renderItem={({ item }) => <NoteCard key={item.id} Note={item} onDel={deleteNote} onEdit={editNote} />}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({ item }) => <NoteCard Note={item} onDel={deleteNote} onEdit={editNote} />}
                 />
 
                 {/* adding prefered working hours modal (by date) */}

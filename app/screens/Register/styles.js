@@ -16,6 +16,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 50
     },
+    createAtext: {
+        color: 'blue',
+        textDecorationLine: 'underline',
+        marginTop: 10,
+        backgroundColor: 'lightgray',
+        padding: 5,
+        borderRadius: 4,
+        fontSize: 16,
+        fontWeight: '200',
+    },
     headerText: {
         fontSize: 32,
         color: 'white',
@@ -40,9 +50,7 @@ const styles = StyleSheet.create({
     },
     input: {
         width: metrics.screenWidth * .7,
-        // height: 50,
-        // backgroundColor:'red'
-
+        height: 50,
     }
 });
 

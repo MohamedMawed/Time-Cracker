@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import Navigator from 'app/navigation';
 import configureStore from 'app/store/configureStore';
+import Loader from './components/loader';
 const { persistor, store } = configureStore();
 
 export default function Entrypoint() {
@@ -15,6 +16,7 @@ export default function Entrypoint() {
     <Provider store={store}>
       <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
         <Navigator />
+        <Loader />
       </PersistGate>
     </Provider>
   );
