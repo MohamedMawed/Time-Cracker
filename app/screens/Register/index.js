@@ -16,7 +16,7 @@ export default function Register() {
     const onLogin = () => dispatch(loginActions.requestLogin('test', '1234'))
 
     return (
-        
+
         <View style={styles.container}>
             <Text style={styles.headerText}><MaterialCommunityIcons name="timetable" size={100} color="white" /></Text>
             <View style={styles.seperator} />
@@ -35,33 +35,33 @@ export default function Register() {
             <OutlinedTextField
                 containerStyle={styles.input}
                 label='Confirm Password'
-                inputContainerStyle={styles.input}                
+                inputContainerStyle={styles.input}
             />
             <View style={styles.seperator} />
             <ModalDropdown
-                        defaultValue={"User Type"}
-                        style={[styles.input,{backgroundColor: 'lightgray',justifyContent: 'center',}]}
-                        textStyle={{ fontSize: 18, color: 'white', width: '100%' ,padding:10}}
-                        dropdownStyle={[styles.input,{ height: 72 }]}
-                        options={["Regular User","Users Manager"]}
-                        onSelect={(index, value) => {
-                            switch (index) {
-                                case '0':
-                                    return
-                                    case '1':
-                                        return
-                                        case '2':
-                                    return 'Final Step'
-                                    default:
-                                        return 'foo';
-                                    }
-                                }}
-                    />
+                defaultValue={"User Type"}
+                style={[styles.input, { backgroundColor: 'lightgray', justifyContent: 'center', }]}
+                textStyle={{ fontSize: 18, color: 'white', width: '100%', padding: 10 }}
+                dropdownStyle={[styles.input, { height: 72 }]}
+                options={["Regular User", "Users Manager"]}
+                onSelect={(index, value) => {
+                    switch (index) {
+                        case '0':
+                            return
+                        case '1':
+                            return
+                        case '2':
+                            return 'Final Step'
+                        default:
+                            return 'foo';
+                    }
+                }}
+            />
             <View style={styles.seperator} />
             <TouchableOpacity style={styles.loginBtn} onPress={onLogin}>
                 <Text style={styles.text}>Register</Text>
             </TouchableOpacity>
-            <Text onPress={()=>NavigationService.navigate('Login')} style={styles.createAtext}>Have An Account ? Login</Text>
+            <Text onPress={() => NavigationService.navigate('Login')} style={styles.createAtext}>Have An Account ? Login</Text>
 
         </View>
     );

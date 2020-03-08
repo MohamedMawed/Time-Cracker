@@ -12,7 +12,7 @@ export default function Login() {
     const dispatch = useDispatch()
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
-    const onLogin = () => dispatch(loginActions.requestLogin('test', '1234'))
+    const onLogin = () => dispatch(loginActions.requestLogin(name,password))
 
     return (
         <View style={styles.container}>
@@ -26,12 +26,15 @@ export default function Login() {
                 containerStyle={styles.input}
                 inputContainerStyle={styles.input}                
                 label='User Name'
+                onChangeText={(text)=>setName(text)}
             />
             <View style={styles.seperator} />
             <OutlinedTextField
                 containerStyle={styles.input}
                 inputContainerStyle={styles.input}                
                 label='Password'
+                secureTextEntry
+                onChangeText={(text)=>setPassword(text)}
             />
             <View style={styles.seperator1} />
             <TouchableOpacity style={styles.loginBtn} onPress={onLogin}>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, FlatList, ScrollView, Text } from 'react-native'
+import React, { useState, useEffect } from 'react';
+import { View, TouchableOpacity, FlatList, Alert, Text } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import ModalDropdown from 'react-native-modal-dropdown'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -12,6 +12,9 @@ import metrics from 'app/config/metrics'
 import * as NavActions from 'app/actions/navigationActions'
 import NavigationService from 'app/navigation/NavigationService'
 import { useDispatch, useSelector } from 'react-redux'
+import * as noteActions from 'app/actions/noteActions'
+
+
 
 const NoteCard = ({ Note, onDel, onEdit }) => {
     return (
@@ -24,8 +27,8 @@ const NoteCard = ({ Note, onDel, onEdit }) => {
                 <View style={{
                     flexDirection: 'row',
                 }}>
-                    <Text> from : {Note.from}</Text>
-                    <Text> ▶ to : {Note.to}</Text>
+                    <Text> from : {Note.start.split('T')[0]}</Text>
+                    <Text> ▶ to : {Note.end.split('T')[0]}</Text>
                 </View>
             </View>
             <View style={{
@@ -51,10 +54,28 @@ export default function Home() {
         'Add Note',
         'Prefered Working Hours',
         'Export View'];
+    const notes = useSelector(state => state.noteReducer.notes)
     const [hideFilter, setHideFilter] = useState(false)
     const [HidePWH, setHidePWH] = useState(false)
-
+    const [notesloading, setNotesloading] = useState(false)
+    
+    const loadNotes = () => dispatch(noteActions.listNotes())
+    useEffect(() => loadNotes(), []);
     const deleteNote=(NoteId)=>{
+        console.log('id', NoteId)
+        Alert.alert(  
+            'Delete Note',  
+            'Are you sure to delete this note ?',  
+            [  
+                {  
+                    text: 'Cancel',  
+                    onPress: () => console.log('Cancel Pressed'),  
+                    style: 'cancel',  
+                },  
+                {text: 'OK', onPress: () => dispatch(noteActions.delNote(NoteId))},  
+            ]  
+        );  
+        
         // show in the delete alert before deleting the item
         // if yes 
         // dispatch the delete Note action
@@ -103,50 +124,9 @@ export default function Home() {
                 {/* this is for the Note Card With Actions */}
                 <FlatList
                 contentContainerStyle={{alignItems:'center'}}
-                    data={[
-                        {
-                            id: 1,
-                            note: "I am a note for you my friendI am a note for you my friendI am a note for you my friend",
-                            from: '03/01/2020',
-                            to: '03/07/2020',
-                        },
-                        {
-                            id: 2,
-                            note: "I am a note for you my friendI am a note for you my friendI am a note for you my friend",
-                            from: '03/01/2020',
-                            to: '03/07/2020',
-                        },
-                        {
-                            id: 3,
-                            note: "I am a note for you my friendI am a note for you my friendI am a note for you my friend",
-                            from: '03/01/2020',
-                            to: '03/07/2020',
-                        },
-                        {
-                            id: 4,
-                            note: "I am a note for you my friendI am a note for you my friendI am a note for you my friend",
-                            from: '03/01/2020',
-                            to: '03/07/2020',
-                        },
-                        {
-                            id: 5,
-                            note: "I am a note for you my friendI am a note for you my friendI am a note for you my friend",
-                            from: '03/01/2020',
-                            to: '03/07/2020',
-                        },
-                        {
-                            id: 6,
-                            note: "I am a note for you my friendI am a note for you my friendI am a note for you my friend",
-                            from: '03/01/2020',
-                            to: '03/07/2020',
-                        },
-                        {
-                            id: 7,
-                            note: "I am a note for you my friendI am a note for you my friendI am a note for you my friend",
-                            from: '03/01/2020',
-                            to: '03/07/2020',
-                        },
-                    ]}
+                    data={notes}
+                    refreshing={notesloading}
+                    onRefresh={loadNotes}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => <NoteCard Note={item} onDel={deleteNote} onEdit={editNote} />}
                 />
