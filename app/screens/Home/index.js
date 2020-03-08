@@ -75,17 +75,11 @@ export default function Home() {
                 {text: 'OK', onPress: () => dispatch(noteActions.delNote(NoteId))},  
             ]  
         );  
-        
-        // show in the delete alert before deleting the item
-        // if yes 
-        // dispatch the delete Note action
 
     }
 
     const editNote=(Note)=>{
-        // got to the edit page to edit this note and them come back
         NavigationService.navigate("EditNote" , {Note} )
-        // dispatch the edit Note action
     }
 
     return (

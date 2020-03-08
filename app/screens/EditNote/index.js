@@ -10,8 +10,8 @@ import metrics from 'app/config/metrics'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 
-export default function EditNote() {
-
+export default function EditNote(props) {
+    const [note, setloading] = useState(props.navigation.getParam('Note'))
     return (
         <View style={styles.container}>
             <ScrollView keyboardShouldPersistTaps={'handled'} >
@@ -31,6 +31,7 @@ export default function EditNote() {
                         multiline
                         containerStyle={styles.input}
                         label='*Note'
+                        value={note.note}
 
                     />
                     <View style={styles.seperator} />
@@ -42,10 +43,12 @@ export default function EditNote() {
                     <OutlinedTextField
                         containerStyle={styles.dateTime}
                         label='*From'
+                        value={note.start.split("T")[0]}
                     />
                     <OutlinedTextField
                         containerStyle={styles.dateTime}
                         label='*To'
+                        value={note.end.split("T")[0]}
                     />
                     </View>
                     <View style={styles.seperator1} />

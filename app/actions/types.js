@@ -15,3 +15,9 @@ export const NOTES_RESPONSE = 'NOTES_RESPONSE'
 // delete note
 export const NOTES_DELETE = 'NOTES_DELETE'
 
+// add note
+export const NOTES_ADD = 'NOTES_ADD'
+
+// edit note
+export const NOTES_EDIT = 'NOTES_EDIT'
+

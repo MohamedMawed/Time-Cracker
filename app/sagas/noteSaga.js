@@ -1,7 +1,7 @@
 
 import { put, call, select } from 'redux-saga/effects'
 
-import { noteList,delNote } from 'app/api/methods/noteMethods'
+import { noteList, delNote, editNote } from 'app/api/methods/noteMethods'
 import * as noteActions from 'app/actions/noteActions'
 import * as loginActions from 'app/actions/loginActions'
 import * as navigationActions from 'app/actions/navigationActions'
@@ -36,7 +36,37 @@ export function* noteListSaga(action) {
     const response = yield call(delNote,action.note_id,token);
     //mock response
   //   const response = { success: true, data: { id: 1 } };
-      global.openToast('cool I am running')
+    if (response) {
+      yield put(noteActions.listNotes());
+      yield put(loginActions.disableLoader({}));
+    } else {
+      yield put(loginActions.disableLoader({}));
+
+    }
+  }
+
+  export function* noteAddSaga(action) {
+    yield put(loginActions.enableLoader());
+    let token = yield select(getToken);
+    // how to call api
+    const response = yield call(addNote, action.note, action.start, action.end, token);
+    // mock response
+    // const response = { success: true, data: { id: 1 } };
+    if (response) {
+      yield put(noteActions.listNotes());
+      yield put(loginActions.disableLoader({}));
+    } else {
+      yield put(loginActions.disableLoader({}));
+    }
+  }
+
+  export function* noteEditSaga(action) {
+    yield put(loginActions.enableLoader());
+    let token = yield select(getToken);
+    //how to call api
+    const response = yield call(editNote, action.note_id, action.note, action.start, action.end, token);
+    //   mock response
+    //   const response = { success: true, data: { id: 1 } };
     if (response) {
       yield put(noteActions.listNotes());
       yield put(loginActions.disableLoader({}));
