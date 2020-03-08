@@ -26,7 +26,7 @@ const RNApp = createStackNavigator(
         },
     },
     {
-        initialRouteName: 'Login',
+        initialRouteName: 'Home',
         headerMode: null
     },
 );

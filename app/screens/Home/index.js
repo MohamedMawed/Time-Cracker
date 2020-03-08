@@ -62,7 +62,6 @@ export default function Home() {
     const loadNotes = () => dispatch(noteActions.listNotes())
     useEffect(() => loadNotes(), []);
     const deleteNote=(NoteId)=>{
-        console.log('id', NoteId)
         Alert.alert(  
             'Delete Note',  
             'Are you sure to delete this note ?',  
