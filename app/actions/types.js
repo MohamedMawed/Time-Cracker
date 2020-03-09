@@ -7,6 +7,9 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_RESPONSE = 'LOGIN_RESPONSE'
 export const LOGIN_FAILED = 'LOGIN_FAILED'
 
+// reister
+export const REGISTER_REQUEST = 'REGISTER_REQUEST'
+
 
 // note list
 export const NOTES_REQUEST = 'NOTES_REQUEST'

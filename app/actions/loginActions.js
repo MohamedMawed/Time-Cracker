@@ -4,12 +4,22 @@
 import * as types from './types';
 
 export function requestLogin(username, password) {
-  return {
-    type: types.LOGIN_REQUEST,
-    username,
-    password,
-  };
+    return {
+      type: types.LOGIN_REQUEST,
+      username,
+      password,
+    };
 }
+
+export function requestRegister(username, password, is_user_manager) {
+    return {
+      type: types.REGISTER_REQUEST,
+      username: username,
+      password: password,
+      is_user_manager : is_user_manager
+    };
+}
+
 
 export function loginFailed() {
   return {

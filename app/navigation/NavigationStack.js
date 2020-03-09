@@ -1,6 +1,7 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
+import Splash from 'app/screens/Splash'
 import Register from 'app/screens/Register'
 import Login from 'app/screens/Login'
 import Home from 'app/screens/Home'
@@ -9,6 +10,10 @@ import EditNote from 'app/screens/EditNote'
 
 const RNApp = createStackNavigator(
     {
+        
+        Splash: {
+            screen: Splash,
+        },
         Register: {
             screen: Register,
         },
@@ -26,7 +31,7 @@ const RNApp = createStackNavigator(
         },
     },
     {
-        initialRouteName: 'Home',
+        initialRouteName: 'Splash',
         headerMode: null
     },
 );

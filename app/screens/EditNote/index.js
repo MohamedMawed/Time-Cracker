@@ -170,7 +170,6 @@ export default function EditNote(props) {
                     <TouchableOpacity onPress={() => {
                         if (validate())
                             dispatch(noteActions.editNote(note.id,note))
-
                     }}
                         style={styles.loginBtn}>
                         <Text style={styles.text}>Save</Text>

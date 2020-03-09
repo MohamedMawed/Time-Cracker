@@ -12,13 +12,20 @@ const initialState = {
 };
 
 export const loginReducer = createReducer(initialState, {
-  [types.LOGIN_REQUEST](state, action) {
-    return {
-      ...state,
-      username: action.username,
-      password: action.password,
-    };
-  },
+    [types.LOGIN_REQUEST](state, action) {
+        return {
+          ...state,
+          username: action.username,
+          password: action.password,
+        };
+      },
+      [types.REGISTER_REQUEST](state, action) {
+        return {
+          ...state,
+          username: action.username,
+          password: action.password,
+        };
+      },
   [types.LOGIN_LOADING_ENDED](state) {
     return { ...state };
   },

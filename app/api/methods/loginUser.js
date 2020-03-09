@@ -1,7 +1,7 @@
-import Api from 'app/api';
-import ApiConstants from '../ApiConstants';
+import Api from 'app/api'
+import ApiConstants from '../ApiConstants'
 
-export default function loginUser(username, password) {
+export function loginUser(username, password) {
     return Api(
         ApiConstants.LOGIN,
         {
@@ -10,5 +10,19 @@ export default function loginUser(username, password) {
         },
         'post',
         null,
-    );
+    )
+}
+
+
+export function registerUser(username, password, is_user_manager) {
+    return Api(
+        ApiConstants.REGISTER,
+        {
+            "username": username,
+            "password": password,
+            "is_user_manager": is_user_manager
+        },
+        'post',
+        null,
+    )
 }
