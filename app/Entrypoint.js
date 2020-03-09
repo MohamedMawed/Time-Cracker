@@ -9,14 +9,12 @@ import { PersistGate } from 'redux-persist/es/integration/react';
 import Navigator from 'app/navigation';
 import configureStore from 'app/store/configureStore';
 import Loader from './components/loader';
-import { CustomToast } from './components/CustomToast';
 const { persistor, store } = configureStore();
 
 export default function Entrypoint() {
   return (
     <Provider store={store}>
       <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
-        <CustomToast/>
         <Navigator />
         <Loader />
       </PersistGate>

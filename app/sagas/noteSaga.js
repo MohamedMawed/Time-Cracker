@@ -1,7 +1,7 @@
 
 import { put, call, select } from 'redux-saga/effects'
 
-import { noteList, delNote, editNote } from 'app/api/methods/noteMethods'
+import { noteList, delNote, editNote, addNote } from 'app/api/methods/noteMethods'
 import * as noteActions from 'app/actions/noteActions'
 import * as loginActions from 'app/actions/loginActions'
 import * as navigationActions from 'app/actions/navigationActions'
@@ -49,7 +49,7 @@ export function* noteListSaga(action) {
     yield put(loginActions.enableLoader());
     let token = yield select(getToken);
     // how to call api
-    const response = yield call(addNote, action.note, action.start, action.end, token);
+    const response = yield call(addNote, action.note.note, action.note.start, action.note.end, token);
     // mock response
     // const response = { success: true, data: { id: 1 } };
     if (response) {
@@ -64,7 +64,8 @@ export function* noteListSaga(action) {
     yield put(loginActions.enableLoader());
     let token = yield select(getToken);
     //how to call api
-    const response = yield call(editNote, action.note_id, action.note, action.start, action.end, token);
+    const response = yield call(editNote, action.note_id, action.note.note, action.note.start, action.note.end, token);
+    console.log(response)
     //   mock response
     //   const response = { success: true, data: { id: 1 } };
     if (response) {

@@ -29,3 +29,18 @@ export function listNotesFailed() {
     };
   }
 
+  export function addNote(note) {
+    return {
+      type: types.NOTES_ADD,
+      note : note
+    };
+  }
+
+  export function editNote(id , note) {
+    return {
+      type: types.NOTES_EDIT,
+      note_id : id,
+      note : note
+    };
+  }
+

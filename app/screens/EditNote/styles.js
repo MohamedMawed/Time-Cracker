@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     },
     dateTime: {
         width: metrics.screenWidth * .4,
+        height : 60
     },
     headerStyle:{
         width: '100%',
