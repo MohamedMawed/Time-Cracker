@@ -52,7 +52,7 @@ export function* userListSaga(action) {
   export function* userEditSaga(action) {
     yield put(loginActions.enableLoader());
     let token = yield select(getToken);
-    const response = yield call(editNote, action.user_id, action.user.user, action.user.date, action.user.hours, token);
+    const response = yield call(editUser, action.user_id, action.user, token);
     if (response) {
       yield put(userActions.listUsers());
       yield put(loginActions.disableLoader({}));

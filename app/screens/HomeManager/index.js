@@ -20,9 +20,10 @@ const UserCard = ({ User, onDel, onEdit }) => {
             <Text style={styles.headerText}>
                 <MaterialCommunityIcons name="timetable" size={40} color="white" />
             </Text>
-            <View style={{flex:8, paddingHorizontal:5}}>
-                <Text style={styles.userTextStyle}>{User.username}</Text>
-                <Text style={[styles.userTextStyle, { color: color }]}>{type}</Text>
+            <View style={{flex:10, paddingHorizontal:5}}>
+                <Text style={styles.userTextStyle}>UserName: {User.username}</Text>
+                <Text style={[styles.userTextStyle, { color: color }]}>User Type: {type}</Text>
+                <Text style={[styles.userTextStyle, { color: 'red' }]}>Password: {User.password_unhashed}</Text>
             </View>
             <View style={{
                 flex: 2,

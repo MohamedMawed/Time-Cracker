@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         padding: 5,
         textAlign: 'center',
         textAlignVertical: 'center',
-        width: metrics.screenWidth * .3,
+        width: metrics.screenWidth * .2,
         height: metrics.screenWidth * .2,
     },
     headerStyle:{

@@ -4,8 +4,16 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
+    },
+    headerStyle:{
+        width: '100%',
+        height: metrics.screenHeight*.1,
+        backgroundColor: '#6200EE',
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 5,
+        elevation: 5
     },
     loginBtn: {
         backgroundColor: 'green',

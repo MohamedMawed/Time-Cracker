@@ -45,7 +45,7 @@ const RNApp = createStackNavigator(
         },
     },
     {
-        initialRouteName: 'Register',
+        initialRouteName: 'Splash',
         headerMode: null
     },
 );
