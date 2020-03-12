@@ -22,7 +22,7 @@ export function* loginSaga(action) {
     if (response.token) {
         yield put(loginActions.onLoginResponse(response))
         yield put(loginActions.disableLoader({}))
-        yield call(navigationActions.navigateToHome)
+        navigationActions.navigateToHome(response)
     } else {
         yield put(loginActions.loginFailed())
         yield put(loginActions.disableLoader({}))
@@ -48,7 +48,8 @@ export function* registerSaga(action) {
     if (response.token) {
         yield put(loginActions.onLoginResponse(response))
         yield put(loginActions.disableLoader({}))
-        yield call(navigationActions.navigateToHome)
+        
+        navigationActions.navigateToHome(response)
     } else {
         yield put(loginActions.loginFailed())
         yield put(loginActions.disableLoader({}))
