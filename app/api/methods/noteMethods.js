@@ -20,13 +20,13 @@ export function delNote(id,token) {
 }
 
 
-export function addNote(note, start, end, token) {
+export function addNote(note, date, hours, token) {
     return Api(
         ApiConstants.NOTE_CRUD,
         {
              "note": note ,
-             "start": start ,
-             "end": end 
+             "date": date ,
+             "hours": hours 
         },
         'post',
         token,
@@ -34,13 +34,13 @@ export function addNote(note, start, end, token) {
 }
 
 
-export function editNote(id, note, start, end, token) {
+export function editNote(id, note, date, hours, token) {
     return Api(
         ApiConstants.NOTE_CRUD+id+'/',
         {
             ...(note && { "note": note }),
-            ...(start && { "start": start }),
-            ...(end && { "end": end }) 
+            ...(date && { "date": date }),
+            ...(hours && { "hours": hours }) 
         },
         'patch',
         token,

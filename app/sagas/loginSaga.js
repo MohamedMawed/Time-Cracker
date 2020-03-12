@@ -18,7 +18,7 @@ export function* loginSaga(action) {
     const response = yield call(loginUser, action.username, action.password)
     //mock response
     //   const response = { success: true, data: { id: 1 } }
-
+    console.log(response)
     if (response.token) {
         yield put(loginActions.onLoginResponse(response))
         yield put(loginActions.disableLoader({}))
@@ -28,6 +28,9 @@ export function* loginSaga(action) {
         yield put(loginActions.disableLoader({}))
         if (response.error)
             Toast.show(response.error)
+        if (response.error)
+            Toast.show(response.non_field_errors[0])
+            
         else Toast.show('Check Internet Connection')
     }
 }

@@ -1,10 +1,11 @@
 /* App config for apis
  */
 const ApiConstants = {
-  BASE_URL: 'http://192.168.1.4:8000/',
+  BASE_URL: 'http://192.168.1.10:8000/',
   LOGIN: 'auth/login/',
   REGISTER: 'auth/register/',
   NOTE_CRUD: 'api/note/',
+  USER_CRUD: 'auth/user/'
 };
 
 export default ApiConstants;

@@ -12,7 +12,8 @@ export default function Splash() {
     const userData = useSelector(state => state.loginReducer.userData)
     useEffect(() => {
         setTimeout(()=>{
-            if (userData.token) {
+            if (userData) {
+                console.log('heu hey heu')
                 let userType = userData.user.is_staff || userData.user.is_user_manager
                 if (!userType)
                     NavigationService.navigate('Home')

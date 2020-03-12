@@ -13,33 +13,29 @@ import Toast from 'react-native-root-toast'
 
 export default function AddNote(props) {
 
-    const [note, setNote] = useState({ note: '', start: new Date().toISOString().split('.')[0], end: new Date().toISOString().split('.')[0] })
-    const [start, setStart] = useState(note.start)
-    const [end, setEnd] = useState(note.end)
+    const [note, setNote] = useState({ note: '', date: new Date().toISOString().split('T')[0], hours: 1 })
+    const [start, setStart] = useState(note.date)
+    const [hours, setHours] = useState(note.hours)
 
 
 
     // validate the note before saving it
     const validate = () => {
         let temp = note;
+        if(!hours || hours <= 0 || hours > 24){
+            Toast.show("please enter a valid number of hours worked")
+            return false            
+        }
         if (temp.note.length == 0) {
             Toast.show("you can't leave the note empty")
             return false
         }
-        if (new Date(start + 'Z') >= new Date(end + 'Z')) {
-            Toast.show("the start date can't be after the end date")
-            return false
-        } else {
-            temp.start = start + 'Z'
-            temp.end = end + 'Z'
-            setNote(temp)
-        }
+        setNote({...note , hours: hours , date: start})
         return true
     }
     // data for the datetime picker
     const [date, setDate] = useState(new Date("2015-03-25T12:00:00Z"));
     const [mode, setMode] = useState('date');
-    const [fromORto, setfromORto] = useState(0);
     const [show, setShow] = useState(false);
     const dispatch = useDispatch()
 
@@ -48,13 +44,8 @@ export default function AddNote(props) {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
-        if (fromORto == 1) {
-            console.log('I am Here ', fromORto, selectedDate.toISOString())
-            setStart(selectedDate.toISOString().split('.')[0].toString())
-        } else {
-            setEnd(selectedDate.toISOString().split('.')[0].toString())
-        }
-        setfromORto(100)
+        setStart(selectedDate.toISOString().split('T')[0].toString())
+        setNote({ ...note, date: selectedDate.toISOString().split('T')[0].toString() })
 
     };
 
@@ -66,11 +57,6 @@ export default function AddNote(props) {
     const showDatepicker = () => {
         showMode('date');
     };
-
-    const showTimepicker = () => {
-        showMode('time');
-    };
-
 
     return (
         <View style={styles.container}>
@@ -106,65 +92,41 @@ export default function AddNote(props) {
                         width: metrics.screenWidth * .9,
                         marginBottom: 10
                     }}>
-                        <Text style={{ fontSize: 18, textAlign: 'center', flex: 1 }}>From</Text>
-                        <Text style={{ fontSize: 18, textAlign: 'center', flex: 1 }}>To</Text>
+                        <Text style={{ fontSize: 18, textAlign: 'center', flex: 1 }}>Date</Text>
+                        <Text style={{ fontSize: 18, textAlign: 'center', flex: 1 }}>Number Of Hours</Text>
                     </View>
                     <View style={{
                         flexDirection: 'row',
                         width: metrics.screenWidth * .9,
                         justifyContent: 'space-evenly',
                     }}>
-                        <Button
-                            // style={styles.dateTime}
-                            label='*Date'
+                        <TouchableOpacity
+                            style={{
+                                width:metrics.screenWidth*.4,
+                                height:metrics.screenHeight*.094,
+                                justifyContent:'center',
+                                alignItems:'center',
+                                backgroundColor:'orange'
+                            }}
                             onPress={() => {
-                                setfromORto(1)
                                 setDate(new Date(start))
                                 showDatepicker()
                             }}
-                            title={start.split("T")[0]}
-                        />
-                        <Button
-                            style={styles.dateTime}
-                            label='*Date'
-                            onPress={() => {
-                                setfromORto(2)
-                                setDate(new Date(end))
-                                showDatepicker()
+                        >
+                            <Text style={{color:'white',fontSize:18,fontWeight:'bold'}}>{start}</Text>
+                        </TouchableOpacity>
+                        <OutlinedTextField
+                            containerStyle={{width:metrics.screenWidth*.4}}
+                            // inputContainerStyle={styles.input}
+                            label='# of hours'
+                            onChangeText={(text) => {
+                                setNote({ ...note, hours: text })
                             }}
-                            title={end.split("T")[0]}
+                            value={hours}
                         />
 
                     </View>
 
-                    <View style={styles.seperator} />
-                    <View style={{
-                        flexDirection: 'row',
-                        width: metrics.screenWidth * .9,
-                        justifyContent: 'space-evenly',
-                    }}>
-                        <Button
-                            style={styles.dateTime}
-                            label='*Time'
-                            onPress={() => {
-                                setfromORto(1)
-                                setDate(new Date(start))
-                                showTimepicker()
-                            }}
-                            title={start.split("T")[1]}
-                        />
-                        <Button
-                            style={styles.dateTime}
-                            label='*Time'
-                            onPress={() => {
-                                setfromORto(2)
-                                setDate(new Date(end))
-                                showTimepicker()
-                            }}
-                            title={end.split("T")[1]}
-                        />
-
-                    </View>
                     <View style={styles.seperator1} />
                     <TouchableOpacity onPress={() => {
                         if (validate())

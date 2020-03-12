@@ -35,8 +35,8 @@ class NoteListCreate(generics.ListCreateAPIView):
         if serializer.is_valid():
             note, created = Note.objects.get_or_create(
                 note=serializer.validated_data['note'],
-                start=serializer.validated_data['start'],
-                end=serializer.validated_data['end'],
+                date=serializer.validated_data['date'],
+                hours=serializer.validated_data['hours'],
                 owner=request.user,
             )
             if not created:

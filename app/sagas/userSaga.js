@@ -1,20 +1,20 @@
 
 import { put, call, select } from 'redux-saga/effects'
 
-import { noteList, delNote, editNote, addNote } from 'app/api/methods/noteMethods'
-import * as noteActions from 'app/actions/noteActions'
+import { userList, delUser, editUser, addUser } from 'app/api/methods/userMethods'
+import * as userActions from 'app/actions/userActions'
 import * as loginActions from 'app/actions/loginActions'
 import * as navigationActions from 'app/actions/navigationActions'
 
 
 getToken = (state) => state.loginReducer.userData.token;
 
-// Our worker Saga that logins the user
-export function* noteListSaga(action) {
+// Our worker Saga that list the users
+export function* userListSaga(action) {
     yield put(loginActions.enableLoader());
     let token = yield select(getToken);
     //how to call api
-    const response = yield call(noteList,token);
+    const response = yield call(userList,token);
     //mock response
   //   const response = { success: true, data: { id: 1 } };
       

@@ -17,6 +17,7 @@ import * as noteActions from 'app/actions/noteActions'
 
 
 const NoteCard = ({ Note, onDel, onEdit }) => {
+    console.log(Note)
     return (
         <View style={styles.cardStyle}>
             <View style={{ flex: 17 }}>
@@ -27,8 +28,8 @@ const NoteCard = ({ Note, onDel, onEdit }) => {
                 <View style={{
                     flexDirection: 'row',
                 }}>
-                    <Text> from : {Note.start.split('T')[0]}</Text>
-                    <Text> ▶ to : {Note.end.split('T')[0]}</Text>
+                    <Text> Date : {Note.date}</Text>
+                    <Text>  # of hours : {Note.hours}</Text>
                 </View>
             </View>
             <View style={{
@@ -53,7 +54,7 @@ export default function Home() {
     let data = [
         'Add Note',
         'Prefered Working Hours',
-        'Export View'];
+        'Make A Report'];
     const notes = useSelector(state => state.noteReducer.notes)
     const [hideFilter, setHideFilter] = useState(false)
     const [HidePWH, setHidePWH] = useState(false)
