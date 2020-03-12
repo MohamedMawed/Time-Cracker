@@ -8,20 +8,26 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import NavigationService from 'app/navigation/NavigationService'
 import ModalDropdown from 'react-native-modal-dropdown'
 import Toast from 'react-native-root-toast'
+import { ValidateEmail } from '../../utils/stringUtils';
 
 
 export default function Register() {
     const dispatch = useDispatch()
     const [name, setName] = useState("")
+    const [mail, setMail] = useState("")
     const [IsUserManager, setIsUserManager] = useState(false)
     const [password, setPassword] = useState("")
     const [confirmPass, setconfirmPass] = useState("")
-    const onRegister = () => dispatch(loginActions.requestRegister(name, password, IsUserManager))
+    const onRegister = () => dispatch(loginActions.requestRegister(name, mail, password, IsUserManager))
 
     // validate the user data
     const validate = () => {
-        if (name == '' || password == '' || confirmPass == '') {
+        if (name == '' || password == '' || confirmPass == ''|| mail == '') {
             Toast.show('Please complete the missing fields')
+            return false
+        }
+        if(!ValidateEmail(mail)){
+            Toast.show("Please enter a valid email")
             return false
         }
         if (name.length < 8) {
@@ -38,7 +44,7 @@ export default function Register() {
     return (
 
         <View style={styles.container}>
-            <Text style={styles.headerText}><MaterialCommunityIcons name="timetable" size={100} color="white" /></Text>
+            <Text style={styles.headerText}><MaterialCommunityIcons name="timetable" size={80} color="white" /></Text>
             <View style={styles.seperator} />
             <OutlinedTextField
                 containerStyle={styles.input}
@@ -46,6 +52,14 @@ export default function Register() {
                 label='User Name'
                 value={name}
                 onChangeText={(text)=>setName(text)}
+            />
+            <View style={styles.seperator} />
+            <OutlinedTextField
+                containerStyle={styles.input}
+                inputContainerStyle={styles.input}
+                label='Email'
+                value={mail}
+                onChangeText={(text)=>setMail(text)}
             />
             <View style={styles.seperator} />
             <OutlinedTextField

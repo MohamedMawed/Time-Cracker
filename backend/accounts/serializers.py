@@ -8,7 +8,7 @@ import base64, uuid
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model   = User
-        fields  = ('user_id', 'password', 'username', 'is_user_manager','is_staff')
+        fields  = ('user_id', 'password', 'username','email', 'is_user_manager','is_staff')
 
         extra_kwargs = {
             'password'  : {'write_only': True},

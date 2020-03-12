@@ -14,12 +14,14 @@ export function loginUser(username, password) {
 }
 
 
-export function registerUser(username, password, is_user_manager) {
+export function registerUser(username, email, password, is_user_manager) {
+    console.log('fsdhfkjdshk ',email)
     return Api(
         ApiConstants.REGISTER,
         {
             "username": username,
             "password": password,
+            "email": email,
             "is_user_manager": is_user_manager
         },
         'post',

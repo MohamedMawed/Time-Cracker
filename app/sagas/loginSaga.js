@@ -41,7 +41,7 @@ export function* registerSaga(action) {
     yield put(loginActions.enableLoader())
 
     //how to call api
-    const response = yield call(registerUser, action.username, action.password, action.is_user_manager)
+    const response = yield call(registerUser, action.username, action.email, action.password, action.is_user_manager)
     //mock response
     //   const response = { success: true, data: { id: 1 } }
 

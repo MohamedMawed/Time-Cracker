@@ -24,7 +24,9 @@ export const loginReducer = createReducer(initialState, {
         return {
           ...state,
           username: action.username,
+          email: action.email,
           password: action.password,
+          is_user_manager: action.is_user_manager
         };
       },
   [types.LOGIN_LOADING_ENDED](state) {
