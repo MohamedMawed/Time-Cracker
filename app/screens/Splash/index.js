@@ -10,7 +10,6 @@ export default function Splash() {
     const dispatch = useDispatch()
     const userData = useSelector(state => state.loginReducer.userData)
     useEffect(() => {
-        console.log(userData)
         setTimeout(()=>{
            navigateToHome(userData)
         },1000)

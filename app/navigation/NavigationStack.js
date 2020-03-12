@@ -10,6 +10,8 @@ import Login from 'app/screens/Login'
 import Home from 'app/screens/Home'
 import AddNote from 'app/screens/AddNote'
 import EditNote from 'app/screens/EditNote'
+import AddUser from 'app/screens/AddUser'
+import EditUser from 'app/screens/EditUser'
 
 const RNApp = createStackNavigator(
     {
@@ -34,6 +36,12 @@ const RNApp = createStackNavigator(
         },
         EditNote: {
             screen: EditNote,
+        },
+        AddUser: {
+            screen: AddUser,
+        },
+        EditUser: {
+            screen: EditUser,
         },
     },
     {

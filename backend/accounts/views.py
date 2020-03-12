@@ -41,10 +41,24 @@ class NotRegularUser(BasePermission):
     def has_permission(self, request, view):
         return request.user.is_staff or request.user.is_user_manager 
 
-class UserList(generics.ListAPIView):
+class UserList(generics.ListCreateAPIView):
     queryset = User.objects.filter(is_staff=False)
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated, NotRegularUser,) 
+    def create(self, request):
+        try:
+            User.objects.get(username=request.data['username'])
+            return Response({"error": "A user with that username already exists"}, status=status.HTTP_409_CONFLICT)
+        except User.DoesNotExist:
+            serializer = UserSerializer(data=request.data)
+            if serializer.is_valid():
+                user = serializer.save()
+                # saving the password before hashing it for the user manager to be able to see it
+                user.password_unhashed = request.data['password']
+                user.save()
+                token = generate_token(user)
+                return Response({"message": "User Created"}, status=status.HTTP_201_CREATED)
+            return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserRUD(generics.RetrieveUpdateDestroyAPIView):

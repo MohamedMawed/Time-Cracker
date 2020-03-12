@@ -11,13 +11,10 @@ export function requestLogin(username, password) {
     };
 }
 
-export function requestRegister(username, email, password, is_user_manager) {
+export function requestRegister(user) {
     return {
       type: types.REGISTER_REQUEST,
-      username: username,
-      email: email,
-      password: password,
-      is_user_manager : is_user_manager
+      user: user
     };
 }
 

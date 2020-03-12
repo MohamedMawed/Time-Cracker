@@ -10,6 +10,7 @@ import ModalDropdown from 'react-native-modal-dropdown'
 import Toast from 'react-native-root-toast'
 import { ValidateEmail } from '../../utils/stringUtils';
 
+const userTypes = ["Regular User", "Users Manager"]
 
 export default function Register() {
     const dispatch = useDispatch()
@@ -18,7 +19,13 @@ export default function Register() {
     const [IsUserManager, setIsUserManager] = useState(false)
     const [password, setPassword] = useState("")
     const [confirmPass, setconfirmPass] = useState("")
-    const onRegister = () => dispatch(loginActions.requestRegister(name, mail, password, IsUserManager))
+    const onRegister = () => dispatch(loginActions.requestRegister(
+        {
+            'username': name,
+            'email': mail,
+            'password': password,
+            'is_user_manager': IsUserManager
+        }))
 
     // validate the user data
     const validate = () => {
@@ -81,11 +88,11 @@ export default function Register() {
             />
             <View style={styles.seperator} />
             <ModalDropdown
-                defaultValue={"User Type"}
+                defaultValue={userTypes[0]}
                 style={[styles.input, { backgroundColor: 'lightgray', justifyContent: 'center', }]}
                 textStyle={{ fontSize: 18, color: 'white', width: '100%', padding: 10 }}
                 dropdownStyle={[styles.input, { height: 72 }]}
-                options={["Regular User", "Users Manager"]}
+                options={userTypes}
                 onSelect={(index, value) => {
                     if (index == 0) setIsUserManager(0)
                     else setIsUserManager(1)

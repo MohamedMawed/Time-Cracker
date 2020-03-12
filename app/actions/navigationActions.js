@@ -2,10 +2,8 @@
  * Reducer actions related with navigation
  */
 import NavigationService from 'app/navigation/NavigationService'
-import { useDispatch, useSelector } from 'react-redux'
 
 function checkUserType(userData){
-    console.log(userData)
     if (userData) {
         let userType = userData.user.is_staff || userData.user.is_user_manager
         if (!userType)

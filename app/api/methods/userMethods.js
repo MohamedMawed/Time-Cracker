@@ -20,12 +20,14 @@ export function delUser(id,token) {
 }
 
 
-export function addUser(username, password, token) {
+export function addUser(user, token) {
     return Api(
         ApiConstants.USER_CRUD,
         {
-             "username": username ,
-             "password": password 
+             "username": user.username,
+             "password": user.password, 
+             "email": user.email,
+             "is_user_manager": user.is_user_manager 
         },
         'post',
         token,
@@ -33,12 +35,14 @@ export function addUser(username, password, token) {
 }
 
 
-export function editUser(id, username, password, token) {
+export function editUser(id, user, token) {
     return Api(
         ApiConstants.NOTE_CRUD+id+'/',
         {
-            ...(username && { "username": username }),
-            ...(password && { "password": password }),
+            ...(user.username && { "username": user.username }),
+            ...(user.password && { "password": user.password }),
+            ...(user.email && { "email": user.email }),
+            ...(user.is_user_manager && { "is_user_manager": user.is_user_manager }),
         },
         'patch',
         token,

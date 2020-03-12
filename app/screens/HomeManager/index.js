@@ -74,7 +74,7 @@ export default function HomeManager() {
             {/* this is the header compontent */}
             <View style={styles.headerStyle}>
                 <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 18 }}>Mohamed Mawed</Text>
-                <FontAwesome5 onPress={() => setHideFilter(true)} style={{ flex: 2 }} name="plus" size={25} color="white" />
+                <FontAwesome5 onPress={()=>NavigationService.navigate('AddUser')} style={{ flex: 2 }} name="plus" size={25} color="white" />
             </View>
 
             {/* this is for the User Card With Actions */}

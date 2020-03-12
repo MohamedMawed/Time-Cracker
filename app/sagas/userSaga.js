@@ -10,18 +10,14 @@ import * as navigationActions from 'app/actions/navigationActions'
 getToken = (state) => state.loginReducer.userData.token;
 
 export function* userListSaga(action) {
-    console.log('hey i am called')
     yield put(loginActions.enableLoader());
     let token = yield select(getToken);
     const response = yield call(userList,token);
    
-    console.log('results', response)
-
     if (response) {
       yield put(userActions.onlistUsersResponse(response));
       yield put(loginActions.disableLoader({}));
     } else {
-        console.log('error happens', response)
       Toast.show("Something Went Worng Please Try Again Later")
       yield put(loginActions.disableLoader({}));
     }
@@ -44,9 +40,9 @@ export function* userListSaga(action) {
   export function* userAddSaga(action) {
     yield put(loginActions.enableLoader());
     let token = yield select(getToken);
-    const response = yield call(addNote, action.user.user, action.user.date, action.user.hours, token);
+    const response = yield call(addUser, action.user, token);
     if (response) {
-      yield put(userActions.listNotes());
+      yield put(userActions.listUsers());
       yield put(loginActions.disableLoader({}));
     } else {
       yield put(loginActions.disableLoader({}));
