@@ -9,6 +9,7 @@ const initialState = {
   id: 0,
   username: '',
   password: '',
+  
 };
 
 export const loginReducer = createReducer(initialState, {

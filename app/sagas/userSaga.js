@@ -9,67 +9,56 @@ import * as navigationActions from 'app/actions/navigationActions'
 
 getToken = (state) => state.loginReducer.userData.token;
 
-// Our worker Saga that list the users
 export function* userListSaga(action) {
+    console.log('hey i am called')
     yield put(loginActions.enableLoader());
     let token = yield select(getToken);
-    //how to call api
     const response = yield call(userList,token);
-    //mock response
-  //   const response = { success: true, data: { id: 1 } };
-      
+   
+    console.log('results', response)
+
     if (response) {
-      yield put(noteActions.onlistNotesResponse(response));
+      yield put(userActions.onlistUsersResponse(response));
       yield put(loginActions.disableLoader({}));
-      yield call(navigationActions.navigateToHome);
     } else {
-      yield put(noteActions.listNotesFailed());
+        console.log('error happens', response)
+      Toast.show("Something Went Worng Please Try Again Later")
       yield put(loginActions.disableLoader({}));
     }
   }
 
 
-  export function* noteDelSaga(action) {
+  export function* userDelSaga(action) {
     yield put(loginActions.enableLoader());
     let token = yield select(getToken);
-    //how to call api
-    const response = yield call(delNote,action.note_id,token);
-    //mock response
-  //   const response = { success: true, data: { id: 1 } };
+    const response = yield call(delUser,action.user_id,token);
     if (response) {
-      yield put(noteActions.listNotes());
+      yield put(userActions.listUsers());
       yield put(loginActions.disableLoader({}));
     } else {
       yield put(loginActions.disableLoader({}));
-
+      Toast.show("Something Went Worng Please Try Again Later")
     }
   }
 
-  export function* noteAddSaga(action) {
+  export function* userAddSaga(action) {
     yield put(loginActions.enableLoader());
     let token = yield select(getToken);
-    // how to call api
-    const response = yield call(addNote, action.note.note, action.note.date, action.note.hours, token);
-    // mock response
-    // const response = { success: true, data: { id: 1 } };
+    const response = yield call(addNote, action.user.user, action.user.date, action.user.hours, token);
     if (response) {
-      yield put(noteActions.listNotes());
+      yield put(userActions.listNotes());
       yield put(loginActions.disableLoader({}));
     } else {
       yield put(loginActions.disableLoader({}));
     }
   }
 
-  export function* noteEditSaga(action) {
+  export function* userEditSaga(action) {
     yield put(loginActions.enableLoader());
     let token = yield select(getToken);
-    //how to call api
-    const response = yield call(editNote, action.note_id, action.note.note, action.note.date, action.note.hours, token);
-    console.log(response)
-    //   mock response
-    //   const response = { success: true, data: { id: 1 } };
+    const response = yield call(editNote, action.user_id, action.user.user, action.user.date, action.user.hours, token);
     if (response) {
-      yield put(noteActions.listNotes());
+      yield put(userActions.listUsers());
       yield put(loginActions.disableLoader({}));
     } else {
       yield put(loginActions.disableLoader({}));

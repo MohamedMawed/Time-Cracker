@@ -11,6 +11,7 @@ export default function Splash() {
     const dispatch = useDispatch()
     const userData = useSelector(state => state.loginReducer.userData)
     useEffect(() => {
+        console.log(userData)
         setTimeout(()=>{
             if (userData) {
                 console.log('heu hey heu')

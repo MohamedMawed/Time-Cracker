@@ -56,6 +56,7 @@ export default function Home() {
         'Prefered Working Hours',
         'Make A Report'];
     const notes = useSelector(state => state.noteReducer.notes)
+    const user = useSelector(state => state.loginReducer.username)
     const [hideFilter, setHideFilter] = useState(false)
     const [HidePWH, setHidePWH] = useState(false)
     const [notesloading, setNotesloading] = useState(false)
@@ -86,16 +87,13 @@ export default function Home() {
             <View style={styles.container}>
                 {/* this is the header compontent */}
                 <View style={styles.headerStyle}>
-                    <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 12 }}>Mohamed Mawed</Text>
+                    <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 12 }}>{user}</Text>
                     <FontAwesome5 onPress={() => setHideFilter(true)} style={{ flex: 2 }} name="filter" size={25} color="white" />
                     <ModalDropdown
-                        defaultValue={"..."}
                         textStyle={{ fontSize: 50, color: 'white', textAlignVertical: 'top', width: '100%', height: 100 }}
-                        renderButtonText={() => '...'}
                         Style={{ flex: 2 }}
                         dropdownStyle={{ height: 'auto' }}
                         options={data}
-
                         onSelect={(index, value) => {
                             switch (index) {
                                 case '0':

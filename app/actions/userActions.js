@@ -17,7 +17,7 @@ export function listUsersFailed() {
   
   export function onlistUsersResponse(response) {
     return {
-      type: types.USERS_RESPONSE,
+      type: types.USERS_REQUEST_RESPONSE,
       response,
     };
   }

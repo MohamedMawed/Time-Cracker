@@ -1,46 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, FlatList, Alert, Text } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import ModalDropdown from 'react-native-modal-dropdown'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import Entypo from 'react-native-vector-icons/Entypo'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import styles from './styles'
-import Modal from "react-native-modal"
-import { OutlinedTextField } from 'react-native-material-textfield'
-import metrics from 'app/config/metrics'
-import * as NavActions from 'app/actions/navigationActions'
 import NavigationService from 'app/navigation/NavigationService'
 import { useDispatch, useSelector } from 'react-redux'
-import * as noteActions from 'app/actions/noteActions'
+import * as userActions from 'app/actions/userActions'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 
 
 const UserCard = ({ User, onDel, onEdit }) => {
     let color = 'black', type = 'regular user'
     if (User.is_user_manager) { color = 'blue', type = 'user manager' }
-    if (User.is_staff) { color = 'blue', type = 'user manager' }
 
     return (
         <View style={styles.cardStyle}>
             <Text style={styles.headerText}>
                 <MaterialCommunityIcons name="timetable" size={40} color="white" />
             </Text>
-            <View>
+            <View style={{flex:8, paddingHorizontal:5}}>
                 <Text style={styles.userTextStyle}>{User.username}</Text>
                 <Text style={[styles.userTextStyle, { color: color }]}>{type}</Text>
             </View>
             <View style={{
                 flex: 2,
-                justifyContent: 'center',
-                alignItems: 'center'
+                justifyContent: 'space-between',
+                alignItems: 'center',
             }}>
                 <Ionicons
-                    onPress={() => onDel(Note.id)}
+                    onPress={() => onDel(User.user_id)}
                     name="ios-close-circle"
                     size={30}
                     color="red" />
-                <MaterialIcons onPress={() => onEdit(Note)} style={{ flex: 2 }} name="edit" size={25} color="green" />
+                <MaterialIcons onPress={() => onEdit(User)} style={{ flex: 2 }} name="edit" size={25} color="green" />
 
             </View>
 
@@ -50,11 +44,11 @@ const UserCard = ({ User, onDel, onEdit }) => {
 }
 export default function HomeManager() {
     const dispatch = useDispatch()
-    const users = useSelector(state => state.noteReducer.notes)
+    const users = useSelector(state => state.userReducer.users)
     const [useresloading, setNotesloading] = useState(false)
 
     const loadUsers = () => dispatch(userActions.listUsers())
-    useEffect(() => loadNotes(), []);
+    useEffect(() => loadUsers(), []);
     const deleteUser = (UserId) => {
         Alert.alert(
             'Delete User',
@@ -79,18 +73,18 @@ export default function HomeManager() {
         <View style={styles.container}>
             {/* this is the header compontent */}
             <View style={styles.headerStyle}>
-                <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 12 }}>Mohamed Mawed</Text>
-                <FontAwesome5 onPress={() => setHideFilter(true)} style={{ flex: 2 }} name="add" size={25} color="white" />
+                <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 18 }}>Mohamed Mawed</Text>
+                <FontAwesome5 onPress={() => setHideFilter(true)} style={{ flex: 2 }} name="plus" size={25} color="white" />
             </View>
 
-            {/* this is for the Note Card With Actions */}
+            {/* this is for the User Card With Actions */}
             <FlatList
                 contentContainerStyle={{ alignItems: 'center' }}
-                data={users}
+                data={users?users:[]}
                 refreshing={useresloading}
-                onRefresh={loadUsers}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => <UserCard Note={item} onDel={deleteUser} onEdit={editUser} />}
+                // onRefresh={loadUsers}
+                keyExtractor={(item) => item.user_id.toString()}
+                renderItem={({ item }) => <UserCard User={item} onDel={deleteUser} onEdit={editUser} />}
             />
 
         </View>
