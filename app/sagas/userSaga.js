@@ -5,6 +5,7 @@ import { userList, delUser, editUser, addUser } from 'app/api/methods/userMethod
 import * as userActions from 'app/actions/userActions'
 import * as loginActions from 'app/actions/loginActions'
 import * as navigationActions from 'app/actions/navigationActions'
+import NavigationService from '../navigation/NavigationService'
 // import { NavigationActions } from 'react-navigation'
 
 
@@ -43,9 +44,8 @@ export function* userListSaga(action) {
     let token = yield select(getToken);
     const response = yield call(addUser, action.user, token);
     if (response) {
-      yield put(userActions.listUsers());
       yield put(loginActions.disableLoader({}))
-    //   yield call(NavigationActions.replaceToHomeManager)
+      NavigationService.reset('HomeManager')
     } else {
       yield put(loginActions.disableLoader({}));
     }
@@ -58,6 +58,7 @@ export function* userListSaga(action) {
     if (response) {
       yield put(userActions.listUsers());
       yield put(loginActions.disableLoader({}));
+      NavigationService.reset('HomeManager')
     } else {
       yield put(loginActions.disableLoader({}));
 

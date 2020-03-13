@@ -13,9 +13,9 @@ import { ValidateEmail } from '../../utils/stringUtils';
 
 const userTypes = ["Regular User", "Users Manager"]
 
-export default function EditUser(props) {
+export default function EditUser({route}) {
     const dispatch = useDispatch()
-    const [user, setUser] = useState(props.navigation.getParam('user'))
+    const [user, setUser] = useState(route.params?.user ?? {})
     const [name, setName] = useState(user.username)
     const [mail, setMail] = useState(user.email)
     const [IsUserManager, setIsUserManager] = useState(user.is_user_manager)

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, FlatList, Alert, Text } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import * as loginActions from 'app/actions/loginActions'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import styles from './styles'
 import NavigationService from 'app/navigation/NavigationService'
@@ -20,8 +22,9 @@ const UserCard = ({ User, onDel, onEdit }) => {
             <Text style={styles.headerText}>
                 <MaterialCommunityIcons name="timetable" size={40} color="white" />
             </Text>
-            <View style={{flex:10, paddingHorizontal:5}}>
+            <View style={{ flex: 14, paddingHorizontal: 5 }}>
                 <Text style={styles.userTextStyle}>UserName: {User.username}</Text>
+                <Text style={styles.userTextStyle}>Email: {User.email}</Text>
                 <Text style={[styles.userTextStyle, { color: color }]}>User Type: {type}</Text>
                 <Text style={[styles.userTextStyle, { color: 'red' }]}>Password: {User.password_unhashed}</Text>
             </View>
@@ -49,7 +52,9 @@ export default function HomeManager() {
     const [useresloading, setNotesloading] = useState(false)
 
     const loadUsers = () => dispatch(userActions.listUsers())
-    useEffect(() => loadUsers(), []);
+    useEffect(() => {
+        loadUsers()
+    }, []);
     const deleteUser = (UserId) => {
         Alert.alert(
             'Delete User',
@@ -75,13 +80,17 @@ export default function HomeManager() {
             {/* this is the header compontent */}
             <View style={styles.headerStyle}>
                 <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 18 }}>Mohamed Mawed</Text>
-                <FontAwesome5 onPress={()=>NavigationService.navigate('AddUser')} style={{ flex: 2 }} name="plus" size={25} color="white" />
+                <AntDesign onPress={() => {
+                    dispatch(loginActions.Logout())
+                    NavigationService.reset('Login')
+                }} style={{ flex: 3 }} name="logout" size={28} color="white" />
+                <FontAwesome5 onPress={() => NavigationService.navigate('AddUser')} style={{ flex: 2 }} name="plus" size={25} color="white" />
             </View>
 
             {/* this is for the User Card With Actions */}
             <FlatList
                 contentContainerStyle={{ alignItems: 'center' }}
-                data={users?users:[]}
+                data={users ? users : []}
                 refreshing={useresloading}
                 // onRefresh={loadUsers}
                 keyExtractor={(item) => item.user_id.toString()}

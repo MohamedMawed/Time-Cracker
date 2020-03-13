@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     },
     headerStyle:{
         width: '100%',
-        height: 50,
+        height:metrics.screenHeight*.08,
         backgroundColor: '#6200EE',
         flexDirection: 'row',
         alignItems: 'center',
