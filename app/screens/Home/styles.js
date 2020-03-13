@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         padding: 5,
-        elevation: 5
+        elevation: 5,
+        height:metrics.screenHeight*.08
     },
     loginBtn: {
         backgroundColor: 'green',

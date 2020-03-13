@@ -5,6 +5,7 @@ import { userList, delUser, editUser, addUser } from 'app/api/methods/userMethod
 import * as userActions from 'app/actions/userActions'
 import * as loginActions from 'app/actions/loginActions'
 import * as navigationActions from 'app/actions/navigationActions'
+// import { NavigationActions } from 'react-navigation'
 
 
 getToken = (state) => state.loginReducer.userData.token;
@@ -43,7 +44,8 @@ export function* userListSaga(action) {
     const response = yield call(addUser, action.user, token);
     if (response) {
       yield put(userActions.listUsers());
-      yield put(loginActions.disableLoader({}));
+      yield put(loginActions.disableLoader({}))
+    //   yield call(NavigationActions.replaceToHomeManager)
     } else {
       yield put(loginActions.disableLoader({}));
     }

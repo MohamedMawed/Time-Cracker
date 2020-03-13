@@ -9,15 +9,15 @@ import styles from './styles'
 import Modal from "react-native-modal"
 import { OutlinedTextField } from 'react-native-material-textfield'
 import metrics from 'app/config/metrics'
-import * as NavActions from 'app/actions/navigationActions'
+import * as loginActions from 'app/actions/loginActions'
 import NavigationService from 'app/navigation/NavigationService'
 import { useDispatch, useSelector } from 'react-redux'
 import * as noteActions from 'app/actions/noteActions'
 
 
 
+
 const NoteCard = ({ Note, onDel, onEdit }) => {
-    console.log(Note)
     return (
         <View style={styles.cardStyle}>
             <View style={{ flex: 17 }}>
@@ -49,12 +49,13 @@ const NoteCard = ({ Note, onDel, onEdit }) => {
 
     )
 }
-export default function Home() {
+export default function Home(props) {
     const dispatch = useDispatch()
     let data = [
         'Add Note',
         'Prefered Working Hours',
-        'Make A Report'];
+        'Make A Report',
+        'Logout'];
     const notes = useSelector(state => state.noteReducer.notes)
     const user = useSelector(state => state.loginReducer.username)
     const [hideFilter, setHideFilter] = useState(false)
@@ -62,7 +63,9 @@ export default function Home() {
     const [notesloading, setNotesloading] = useState(false)
     
     const loadNotes = () => dispatch(noteActions.listNotes())
-    useEffect(() => loadNotes(), []);
+    useEffect(() => {
+        loadNotes()
+    }, []);
     const deleteNote=(NoteId)=>{
         Alert.alert(  
             'Delete Note',  
@@ -93,6 +96,7 @@ export default function Home() {
                         textStyle={{ fontSize: 50, color: 'white', textAlignVertical: 'top', width: '100%', height: 100 }}
                         Style={{ flex: 2 }}
                         dropdownStyle={{ height: 'auto' }}
+                        animated={false}
                         options={data}
                         onSelect={(index, value) => {
                             switch (index) {
@@ -102,10 +106,10 @@ export default function Home() {
                                 case '1':
                                     setHidePWH(true)
                                     return
-                                case '2':
-                                    return 'Final Step'
-                                default:
-                                    return 'foo';
+                                case '3':
+                                    dispatch(loginActions.Logout())
+                                    NavigationService.reset('Login')
+                                    return 
                             }
                         }}
                     >

@@ -3,15 +3,16 @@ import { View, KeyboardAvoidingView, Text, TouchableOpacity } from 'react-native
 import styles from './styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useDispatch, useSelector } from 'react-redux'
-import { navigateToHome } from '../../actions/navigationActions';
+import { navigateToHome, checkUserType } from '../../actions/navigationActions';
+import NavigationService from '../../navigation/NavigationService';
 
 
-export default function Splash() {
+export default function Splash(props) {
     const dispatch = useDispatch()
     const userData = useSelector(state => state.loginReducer.userData)
     useEffect(() => {
         setTimeout(()=>{
-           navigateToHome(userData)
+           NavigationService.reset(checkUserType(userData))
         },1000)
     }, []);
 

@@ -20,6 +20,12 @@ export const loginReducer = createReducer(initialState, {
           password: action.password,
         };
       },
+      [types.LOGOUT](state, action) {
+        return {
+          ...state,
+          userData: undefined
+        };
+      },
       [types.REGISTER_REQUEST](state, action) {
         return {
           ...state,

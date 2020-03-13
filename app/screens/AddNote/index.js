@@ -63,10 +63,8 @@ export default function AddNote(props) {
             <ScrollView keyboardShouldPersistTaps={'handled'} >
                 {/* this is the header compontent */}
                 <View style={styles.headerStyle}>
-                    <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 12 }}>Add Note</Text>
+                    <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 25, color: 'white' }}>Add Note</Text>
                 </View>
-
-
 
                 <View style={{
                     justifyContent: 'center',
@@ -103,7 +101,7 @@ export default function AddNote(props) {
                         <TouchableOpacity
                             style={{
                                 width:metrics.screenWidth*.4,
-                                height:metrics.screenHeight*.094,
+                                height:55,
                                 justifyContent:'center',
                                 alignItems:'center',
                                 backgroundColor:'orange'

@@ -11,6 +11,12 @@ export function requestLogin(username, password) {
     };
 }
 
+export function Logout() {
+    return {
+      type: types.LOGOUT
+    };
+}
+
 export function requestRegister(user) {
     return {
       type: types.REGISTER_REQUEST,

@@ -105,7 +105,7 @@ export default function Register() {
                 }}>
                 <Text style={styles.text}>Register</Text>
             </TouchableOpacity>
-            <Text onPress={() => NavigationService.navigate('Login')} style={styles.createAtext}>Have An Account ? Login</Text>
+            <Text onPress={() => NavigationService.replace('Login')} style={styles.createAtext}>Have An Account ? Login</Text>
 
         </View>
     );

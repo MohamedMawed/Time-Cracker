@@ -41,7 +41,7 @@ export default function Login() {
                 <Text style={styles.text}>login</Text>
             </TouchableOpacity>
             <Text 
-                onPress={()=>NavigationService.navigate('Register')}
+                onPress={()=>NavigationService.replace('Register')}
                 style={styles.createAtext}>
                     Create A New Account
             </Text>

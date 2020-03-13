@@ -14,12 +14,14 @@ const styles = StyleSheet.create({
     },
     headerStyle:{
         width: '100%',
-        height: metrics.screenHeight*.1,
+        height: metrics.screenHeight*.08,
         backgroundColor: '#6200EE',
         flexDirection: 'row',
         alignItems: 'center',
         padding: 5,
-        elevation: 5
+        elevation: 5,
+        justifyContent:'center',
+        alignItems:'center',
     },
     loginBtn: {
         marginTop:metrics.screenHeight*.1,
