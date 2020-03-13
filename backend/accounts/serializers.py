@@ -13,7 +13,15 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password'  : {'write_only': True},
         }
-
+    def update(self, instance, validated_data):
+        for attr, value in validated_data.items():
+            if attr == 'password':
+                instance.set_password(value)
+            else:
+                setattr(instance, attr, value)
+        instance.save()
+        return instance
+        
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
