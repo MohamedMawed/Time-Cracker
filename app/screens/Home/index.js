@@ -13,13 +13,14 @@ import * as loginActions from 'app/actions/loginActions'
 import NavigationService from 'app/navigation/NavigationService'
 import { useDispatch, useSelector } from 'react-redux'
 import * as noteActions from 'app/actions/noteActions'
+import { Switch } from 'react-native-gesture-handler';
 
 
 
 
 const NoteCard = ({ Note, onDel, onEdit }) => {
     return (
-        <View style={styles.cardStyle}>
+        <View style={[styles.cardStyle,{backgroundColor:Note.underPWH?'#ffdbdd':'white'}]}>
             <View style={{ flex: 17 }}>
                 <Text>
                     {Note.note}
@@ -53,19 +54,23 @@ export default function Home(props) {
     const dispatch = useDispatch()
     let data = [
         'Add Note',
-        'Prefered Working Hours',
+        'Settings',
         'Make A Report',
         'Logout'];
     const notes = useSelector(state => state.noteReducer.notes)
+    const pwh = useSelector(state => state.noteReducer.underPWH)
     const user = useSelector(state => state.loginReducer.username)
     const [hideFilter, setHideFilter] = useState(false)
     const [HidePWH, setHidePWH] = useState(false)
     const [notesloading, setNotesloading] = useState(false)
-    
+    const [preferredWorkingHours , setPreferredWorkingHours] = useState(pwh)
     const loadNotes = () => dispatch(noteActions.listNotes())
+    const getPWH = () => dispatch(noteActions.getPWH()) 
     useEffect(() => {
         loadNotes()
-    }, []);
+        getPWH()
+        setPreferredWorkingHours(pwh)
+    }, [pwh]);
     const deleteNote=(NoteId)=>{
         Alert.alert(  
             'Delete Note',  
@@ -129,9 +134,9 @@ export default function Home(props) {
 
                 {/* adding prefered working hours modal (by date) */}
                 <Modal isVisible={HidePWH}>
-                    <View style={{ height: metrics.screenHeight * .35, alignItems: 'flex-end', justifyContent: 'space-between', backgroundColor: 'white', borderRadius: 4, padding: 10 }}>
+                    <View style={{ height: metrics.screenHeight * .25, alignItems: 'flex-end', justifyContent: 'space-between', backgroundColor: 'white', borderRadius: 4, padding: 10 }}>
                         <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 16, color: 'blue', }}>Today Preferred Working Hours</Text>
+                            <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 25, color: 'blue', }}>Settings</Text>
                             <Ionicons
                                 onPress={() => setHidePWH(false)}
                                 name="ios-close-circle"
@@ -139,16 +144,13 @@ export default function Home(props) {
                                 color="red" />
                         </View>
                         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-evenly' }}>
-                            <OutlinedTextField
-                                containerStyle={styles.input}
-                                label='From Hour'
-                            />
-                            <OutlinedTextField
-                                containerStyle={styles.input}
-                                label='To Hour'
-                            />
+                            <Text style={{fontFamily:'sans-serif-medium',fontSize:20}}>Today Preferred Working Hours</Text>
+                            <Switch value={preferredWorkingHours} onValueChange={(value)=>setPreferredWorkingHours(value)}/>
                         </View>
-                        <TouchableOpacity style={styles.loginBtn} onPress={() => alert('save')}>
+                        <TouchableOpacity style={styles.loginBtn} onPress={() => {
+                            dispatch(noteActions.changePWH(preferredWorkingHours))
+                            setHidePWH(false)
+                        }}>
                             <Text style={styles.text}>Save</Text>
                         </TouchableOpacity>
                     </View>

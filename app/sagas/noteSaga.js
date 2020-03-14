@@ -1,10 +1,11 @@
 
 import { put, call, select } from 'redux-saga/effects'
 
-import { noteList, delNote, editNote, addNote } from 'app/api/methods/noteMethods'
+import { noteList, delNote, editNote, addNote, changePWH, getPWH } from 'app/api/methods/noteMethods'
 import * as noteActions from 'app/actions/noteActions'
 import * as loginActions from 'app/actions/loginActions'
 import NavigationService from '../navigation/NavigationService'
+import Toast from 'react-native-root-toast'
 
 
 getToken = (state) => state.loginReducer.userData.token
@@ -64,5 +65,34 @@ export function* noteListSaga(action) {
     } else {
       yield put(loginActions.disableLoader({}))
 
+    }
+  }
+
+
+  export function* PWHSaga(action) {
+    yield put(loginActions.enableLoader())
+    let token = yield select(getToken)
+    const response = yield call(changePWH, token)
+    
+    if (response) {
+      yield put(noteActions.listNotes())
+      yield put(loginActions.disableLoader({}))
+    } else {
+      yield put(loginActions.disableLoader({}))
+      Toast.show('something went wrong')
+    }
+  }
+
+  export function* TodayPWHSaga(action) {
+    yield put(loginActions.enableLoader())
+    let token = yield select(getToken)
+    const response = yield call(getPWH, token)
+    
+    if (response) {
+      yield put(noteActions.setTodayPWH(response.underPWH))
+      yield put(loginActions.disableLoader({}))
+    } else {
+      yield put(loginActions.disableLoader({}))
+      Toast.show('something went wrong')
     }
   }

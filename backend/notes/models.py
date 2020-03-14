@@ -12,3 +12,13 @@ class Note(models.Model):
                                        MaxValueValidator(24)])
     def __str__(self):
         return self.note
+
+class PwhPerDay(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField(("Date To Work Under"), default=timezone.now)
+
+    class Meta:
+        unique_together = ['owner', 'date']
+        
+    def __str__(self):
+        return str(self.date)

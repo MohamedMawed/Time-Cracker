@@ -29,6 +29,12 @@ export const NOTES_ADD = 'NOTES_ADD'
 // edit note
 export const NOTES_EDIT = 'NOTES_EDIT'
 
+// note PWH for changing the preferred working hours
+export const PWH = 'PWH'
+export const PWH_GET = 'PWH_GET'
+
+export const PWH_RESULT = 'PWH_RESULT'
+
 
 
 

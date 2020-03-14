@@ -44,3 +44,22 @@ export function listNotesFailed() {
     };
   }
 
+  export function changePWH(PWH){
+    return {
+        type: types.PWH,
+        PWH:PWH
+    }
+}
+export function getPWH(){
+    return {
+        type: types.PWH_GET,
+    }
+}
+
+export function setTodayPWH(pwh){
+    return {
+        type: types.PWH_RESULT,
+        pwh : pwh
+    }
+}
+  

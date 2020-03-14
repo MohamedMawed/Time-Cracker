@@ -5,6 +5,8 @@ const ApiConstants = {
   LOGIN: 'auth/login/',
   REGISTER: 'auth/register/',
   NOTE_CRUD: 'api/note/',
+  PWH: 'api/pwh/',
+  PWH_TODAY: 'api/pwh/today/',
   USER_CRUD: 'auth/user/'
 };
 
