@@ -7,7 +7,11 @@ from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
 from django.http import HttpResponse, JsonResponse
 import django.utils.timezone
-
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from collections import defaultdict
+import itertools
+import operator
 
 # for filtering the user manager from being able to control the other the notes
 class NotUserManager(BasePermission):
@@ -51,6 +55,45 @@ class PWHToday(APIView):
         except:
             return JsonResponse({'underPWH':False})
             
+
+class SendReport(APIView):
+    permission_classes = (IsAuthenticated,NotUserManager,)
+
+    def get(self, request, format=None):
+        queryset = Note.objects.filter(owner=request.user)
+        fromDate = self.request.query_params.get('from')
+        toDate = self.request.query_params.get('to')
+        if fromDate:
+            queryset = queryset.filter(date__gte=fromDate)
+        if toDate:
+            queryset = queryset.filter(date__lte=toDate)
+
+        get_attr = operator.attrgetter('date')
+        new_list = [list(g) for k, g in itertools.groupby(sorted(list(queryset), key=get_attr), get_attr)]
+        summary = []
+        for cat in new_list:
+            sum = {
+                'date' : '',
+                'totaltime': 0,
+                'notes': []
+            }
+            sum['notes'] = cat
+            for note in cat:
+                sum['totaltime'] += note.hours
+                sum['date'] = note.date
+            summary.append(sum)
+
+        html_message = render_to_string('mail_template.html', {'notes': summary})
+        send_mail(
+        'Your Requested Report',
+        html_message,
+        'mastermomawed@gmail.com',
+        [request.user.email],
+        fail_silently=False,
+        html_message=html_message
+        )
+        return Response({})            
+        # return Response(serializer.data)            
 
 
 

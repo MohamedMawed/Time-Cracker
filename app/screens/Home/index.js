@@ -135,6 +135,12 @@ export default function Home(props) {
                             case '1':
                                 setHidePWH(true)
                                 return
+                            case '2':
+                                dispatch(noteActions.sendReport(
+                                    from.length == 4 ? undefined : from,
+                                    to.length == 2 ? undefined : to
+                                ))
+                                return
                             case '3':
                                 dispatch(loginActions.Logout())
                                 NavigationService.reset('Login')

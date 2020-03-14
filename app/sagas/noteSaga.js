@@ -1,7 +1,7 @@
 
 import { put, call, select } from 'redux-saga/effects'
 
-import { noteList, delNote, editNote, addNote, changePWH, getPWH } from 'app/api/methods/noteMethods'
+import { noteList, delNote, editNote, addNote, changePWH, getPWH, sendReport } from 'app/api/methods/noteMethods'
 import * as noteActions from 'app/actions/noteActions'
 import * as loginActions from 'app/actions/loginActions'
 import NavigationService from '../navigation/NavigationService'
@@ -10,7 +10,23 @@ import Toast from 'react-native-root-toast'
 
 getToken = (state) => state.loginReducer.userData.token
 
-// Our worker Saga that logins the user
+
+//send the report 
+export function* sendReportSaga(action) {
+    yield put(loginActions.enableLoader())
+    let token = yield select(getToken)
+    const response = yield call(sendReport, action.from, action.to, token)
+
+    if (response) {
+      yield put(loginActions.disableLoader({}))
+      Toast.show('Report sent to your mail successfully')
+    } else {
+      Toast.show('there is a problem sending you the report')
+      yield put(loginActions.disableLoader({}))
+    }
+  }
+
+// Our worker Saga that list the notes
 export function* noteListSaga(action) {
     yield put(loginActions.enableLoader())
     let token = yield select(getToken)

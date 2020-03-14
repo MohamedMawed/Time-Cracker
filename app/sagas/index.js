@@ -10,7 +10,8 @@ import {
     noteAddSaga,
     noteEditSaga,
     PWHSaga,
-    TodayPWHSaga
+    TodayPWHSaga,
+    sendReportSaga
 } from './noteSaga'
 import { 
     userListSaga,
@@ -24,11 +25,15 @@ export default function* watch() {
         takeLatest(types.LOGIN_REQUEST, loginSaga),
         takeLatest(types.REGISTER_REQUEST, registerSaga),
 
+        // for sending the report
+        takeLatest(types.SEND_REPORT, sendReportSaga),
+
         // this is for the note CRUD for regular user
         takeLatest(types.NOTES_REQUEST, noteListSaga),
         takeLatest(types.NOTES_DELETE, noteDelSaga),
         takeLatest(types.NOTES_ADD, noteAddSaga),
         takeLatest(types.NOTES_EDIT, noteEditSaga),
+
         // for changing the PWH
         takeLatest(types.PWH, PWHSaga),
         takeLatest(types.PWH_GET, TodayPWHSaga),

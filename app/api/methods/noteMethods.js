@@ -1,7 +1,8 @@
 import Api from 'app/api'
 import ApiConstants from '../ApiConstants'
 
-export function noteList(from, to, token) {
+// help adding the query parameters
+function filterParams(from, to){
     qParams = ''
     if (from) {
         if (to)
@@ -11,13 +12,27 @@ export function noteList(from, to, token) {
         if (to)
             qParams = '?to=' + to
     }
+    return qParams
+}
+
+export function sendReport(from, to, token) {
     return Api(
-        ApiConstants.NOTE_CRUD + qParams,
+        ApiConstants.SEND_REPORT + filterParams(from, to),
         null,
         'get',
         token,
     )
 }
+
+export function noteList(from, to, token) {
+    return Api(
+        ApiConstants.NOTE_CRUD + filterParams(from, to),
+        null,
+        'get',
+        token,
+    )
+}
+
 
 export function delNote(id,token) {
     return Api(

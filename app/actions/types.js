@@ -15,6 +15,8 @@ export const LOGOUT = 'LOGOUT'
 // reister
 export const REGISTER_REQUEST = 'REGISTER_REQUEST'
 
+// send the filtered data as a report
+export const SEND_REPORT = 'SEND_REPORT'
 
 // note list
 export const NOTES_REQUEST = 'NOTES_REQUEST'

@@ -3,6 +3,14 @@
  */
 import * as types from './types';
 
+
+export function sendReport(from, to) {
+    return {
+        type: types.SEND_REPORT,
+        from: from,
+        to: to
+    };
+}
 export function listNotes(from, to) {
     return {
         type: types.NOTES_REQUEST,
