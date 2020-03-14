@@ -14,8 +14,8 @@ getToken = (state) => state.loginReducer.userData.token
 export function* noteListSaga(action) {
     yield put(loginActions.enableLoader())
     let token = yield select(getToken)
-    const response = yield call(noteList,token)
-      
+    const response = yield call(noteList, action.from, action.to, token)
+
     if (response) {
       yield put(noteActions.onlistNotesResponse(response))
       yield put(loginActions.disableLoader({}))

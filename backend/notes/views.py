@@ -58,9 +58,16 @@ class PWHToday(APIView):
 class NoteListCreate(generics.ListCreateAPIView):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
-    permission_classes = (IsAuthenticated,NotUserManager,) 
+    permission_classes = (IsAuthenticated,NotUserManager,)
+     
     def list(self, request):
         queryset = Note.objects.filter(owner=request.user)
+        fromDate = self.request.query_params.get('from')
+        toDate = self.request.query_params.get('to')
+        if fromDate:
+            queryset = queryset.filter(date__gte=fromDate)
+        if toDate:
+            queryset = queryset.filter(date__lte=toDate)
         serializer = NoteSerializer(queryset, context= {'request': request,}, many=True)
         return Response(serializer.data)
 

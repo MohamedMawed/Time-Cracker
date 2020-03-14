@@ -36,7 +36,7 @@ export default function AddNote(props) {
     // data for the datetime picker
     const [date, setDate] = useState(new Date("2015-03-25T12:00:00Z"));
     const [mode, setMode] = useState('date');
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false)
     const dispatch = useDispatch()
 
     const onChange = (event, selectedDate) => {

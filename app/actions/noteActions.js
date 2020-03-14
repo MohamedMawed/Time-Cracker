@@ -3,10 +3,12 @@
  */
 import * as types from './types';
 
-export function listNotes() {
-  return {
-    type: types.NOTES_REQUEST,
-  };
+export function listNotes(from, to) {
+    return {
+        type: types.NOTES_REQUEST,
+        from: from,
+        to: to
+    };
 }
 
 export function listNotesFailed() {

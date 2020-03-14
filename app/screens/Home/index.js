@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import { View, TouchableOpacity, FlatList, Alert, Text } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import ModalDropdown from 'react-native-modal-dropdown'
@@ -13,18 +13,19 @@ import * as loginActions from 'app/actions/loginActions'
 import NavigationService from 'app/navigation/NavigationService'
 import { useDispatch, useSelector } from 'react-redux'
 import * as noteActions from 'app/actions/noteActions'
-import { Switch } from 'react-native-gesture-handler';
+import { Switch } from 'react-native-gesture-handler'
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 
 
 
 const NoteCard = ({ Note, onDel, onEdit }) => {
     return (
-        <View style={[styles.cardStyle,{backgroundColor:Note.underPWH?'#ffdbdd':'white'}]}>
+        <View style={[styles.cardStyle, { backgroundColor: Note.underPWH ? '#ffdbdd' : 'white' }]}>
             <View style={{ flex: 17 }}>
                 <Text>
                     {Note.note}
-            </Text>
+                </Text>
                 <View style={{ height: 2, width: '100%', backgroundColor: 'lightgray', marginVertical: 5 }} />
                 <View style={{
                     flexDirection: 'row',
@@ -52,135 +53,209 @@ const NoteCard = ({ Note, onDel, onEdit }) => {
 }
 export default function Home(props) {
     const dispatch = useDispatch()
-    let data = [
+    const data = [
         'Add Note',
         'Settings',
         'Make A Report',
-        'Logout'];
+        'Logout']
     const notes = useSelector(state => state.noteReducer.notes)
     const pwh = useSelector(state => state.noteReducer.underPWH)
     const user = useSelector(state => state.loginReducer.username)
     const [hideFilter, setHideFilter] = useState(false)
     const [HidePWH, setHidePWH] = useState(false)
     const [notesloading, setNotesloading] = useState(false)
-    const [preferredWorkingHours , setPreferredWorkingHours] = useState(pwh)
+    const [preferredWorkingHours, setPreferredWorkingHours] = useState(pwh)
     const loadNotes = () => dispatch(noteActions.listNotes())
-    const getPWH = () => dispatch(noteActions.getPWH()) 
+    const getPWH = () => dispatch(noteActions.getPWH())
+
+
+    const [date, setDate] = useState(new Date())
+    const [show, setShow] = useState(false)
+    const [fromOrTo, setFromOrTo] = useState(0)
+    const [from, setFrom] = useState('from')
+    const [to, setTo] = useState('to')
+
     useEffect(() => {
         loadNotes()
         getPWH()
         setPreferredWorkingHours(pwh)
-    }, [pwh]);
-    const deleteNote=(NoteId)=>{
-        Alert.alert(  
-            'Delete Note',  
-            'Are you sure to delete this note ?',  
-            [  
-                {  
-                    text: 'Cancel',  
-                    onPress: () => console.log('Cancel Pressed'),  
-                    style: 'cancel',  
-                },  
-                {text: 'OK', onPress: () => dispatch(noteActions.delNote(NoteId))},  
-            ]  
-        );  
+    }, [pwh])
+    const deleteNote = (NoteId) => {
+        Alert.alert(
+            'Delete Note',
+            'Are you sure to delete this note ?',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                { text: 'OK', onPress: () => dispatch(noteActions.delNote(NoteId)) },
+            ]
+        )
 
     }
 
-    const editNote=(Note)=>{
-        NavigationService.navigate("EditNote" , {Note} )
+    const editNote = (Note) => {
+        NavigationService.navigate("EditNote", { Note })
+    }
+
+    const onChange = (event, selectedDate) => {
+        if (!selectedDate) return // if the user click cancel for the date time picker
+        const currentDate = selectedDate || date
+        setShow(Platform.OS === 'ios')
+        setDate(currentDate)
+        if (fromOrTo) setFrom(selectedDate.toISOString().split('T')[0].toString())
+        else setTo(selectedDate.toISOString().split('T')[0].toString())
+
+    }
+
+
+    const showDatepicker = () => {
+        setShow(true)
     }
 
     return (
-            <View style={styles.container}>
-                {/* this is the header compontent */}
-                <View style={styles.headerStyle}>
-                    <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 12 }}>{user}</Text>
-                    <FontAwesome5 onPress={() => setHideFilter(true)} style={{ flex: 2 }} name="filter" size={25} color="white" />
-                    <ModalDropdown
-                        textStyle={{ fontSize: 50, color: 'white', textAlignVertical: 'top', width: '100%', height: 100 }}
-                        Style={{ flex: 2 }}
-                        dropdownStyle={{ height: 'auto' }}
-                        animated={false}
-                        options={data}
-                        onSelect={(index, value) => {
-                            switch (index) {
-                                case '0':
-                                    NavigationService.navigate('AddNote')
-                                    return
-                                case '1':
-                                    setHidePWH(true)
-                                    return
-                                case '3':
-                                    dispatch(loginActions.Logout())
-                                    NavigationService.reset('Login')
-                                    return 
-                            }
-                        }}
-                    >
-                        <Entypo name="dots-three-vertical" size={25} color="white" />
-                    </ModalDropdown>
-                </View>
-
-                {/* this is for the Note Card With Actions */}
-                <FlatList
-                contentContainerStyle={{alignItems:'center'}}
-                    data={notes}
-                    refreshing={notesloading}
-                    onRefresh={loadNotes}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => <NoteCard Note={item} onDel={deleteNote} onEdit={editNote} />}
-                />
-
-                {/* adding prefered working hours modal (by date) */}
-                <Modal isVisible={HidePWH}>
-                    <View style={{ height: metrics.screenHeight * .25, alignItems: 'flex-end', justifyContent: 'space-between', backgroundColor: 'white', borderRadius: 4, padding: 10 }}>
-                        <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 25, color: 'blue', }}>Settings</Text>
-                            <Ionicons
-                                onPress={() => setHidePWH(false)}
-                                name="ios-close-circle"
-                                size={30}
-                                color="red" />
-                        </View>
-                        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-evenly' }}>
-                            <Text style={{fontFamily:'sans-serif-medium',fontSize:20}}>Today Preferred Working Hours</Text>
-                            <Switch value={preferredWorkingHours} onValueChange={(value)=>setPreferredWorkingHours(value)}/>
-                        </View>
-                        <TouchableOpacity style={styles.loginBtn} onPress={() => {
-                            dispatch(noteActions.changePWH(preferredWorkingHours))
-                            setHidePWH(false)
-                        }}>
-                            <Text style={styles.text}>Save</Text>
-                        </TouchableOpacity>
-                    </View>
-                </Modal>
-                {/* filter data modal (by date) */}
-                <Modal isVisible={hideFilter}>
-                    <View style={{ height: metrics.screenHeight * .35, alignItems: 'flex-end', justifyContent: 'space-between', backgroundColor: 'white', borderRadius: 4, padding: 10 }}>
-                        <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 16, color: 'blue', }}>Filter By Date</Text>
-                            <Ionicons
-                                onPress={() => setHideFilter(false)}
-                                name="ios-close-circle"
-                                size={30}
-                                color="red" />
-                        </View>
-                        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-evenly' }}>
-                            <OutlinedTextField
-                                containerStyle={styles.input}
-                                label='Date From'
-                            />
-                            <OutlinedTextField
-                                containerStyle={styles.input}
-                                label='Date To'
-                            />
-                        </View>
-                        <TouchableOpacity style={styles.loginBtn} onPress={() => alert('save')}>
-                            <Text style={styles.text}>Save</Text>
-                        </TouchableOpacity>
-                    </View>
-                </Modal>
+        <View style={styles.container}>
+            {/* this is the header compontent */}
+            <View style={styles.headerStyle}>
+                <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 12 }}>{user}</Text>
+                <FontAwesome5 onPress={() => setHideFilter(true)} style={{ flex: 2 }} name="filter" size={25} color="white" />
+                <ModalDropdown
+                    textStyle={{ fontSize: 50, color: 'white', textAlignVertical: 'top', width: '100%', height: 100 }}
+                    Style={{ flex: 2 }}
+                    dropdownStyle={{ height: 'auto' }}
+                    animated={false}
+                    options={data}
+                    onSelect={(index, value) => {
+                        switch (index) {
+                            case '0':
+                                NavigationService.navigate('AddNote')
+                                return
+                            case '1':
+                                setHidePWH(true)
+                                return
+                            case '3':
+                                dispatch(loginActions.Logout())
+                                NavigationService.reset('Login')
+                                return
+                        }
+                    }}
+                >
+                    <Entypo name="dots-three-vertical" size={25} color="white" />
+                </ModalDropdown>
             </View>
-    );
+
+            {/* this is for the Note Card With Actions */}
+            <FlatList
+                contentContainerStyle={{ alignItems: 'center' }}
+                data={notes}
+                refreshing={notesloading}
+                onRefresh={loadNotes}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => <NoteCard Note={item} onDel={deleteNote} onEdit={editNote} />}
+            />
+
+            {/* adding prefered working hours modal (by date) */}
+            <Modal isVisible={HidePWH}>
+                <View style={{ height: metrics.screenHeight * .25, alignItems: 'flex-end', justifyContent: 'space-between', backgroundColor: 'white', borderRadius: 4, padding: 10 }}>
+                    <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 25, color: 'blue', }}>Settings</Text>
+                        <Ionicons
+                            onPress={() => setHidePWH(false)}
+                            name="ios-close-circle"
+                            size={30}
+                            color="red" />
+                    </View>
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-evenly' }}>
+                        <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20 }}>Today Preferred Working Hours</Text>
+                        <Switch value={preferredWorkingHours} onValueChange={(value) => setPreferredWorkingHours(value)} />
+                    </View>
+                    <TouchableOpacity style={styles.loginBtn} onPress={() => {
+                        dispatch(noteActions.changePWH(preferredWorkingHours))
+                        setHidePWH(false)
+                    }}>
+                        <Text style={styles.text}>Save</Text>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
+            {/* filter data modal (by date) */}
+            <Modal isVisible={hideFilter}>
+                <View style={{ height: metrics.screenHeight * .25, alignItems: 'flex-end', justifyContent: 'space-between', backgroundColor: 'white', borderRadius: 4, padding: 10 }}>
+                    <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 25, color: 'blue', }}>Filter By Date</Text>
+                        <Ionicons
+                            onPress={() => setHideFilter(false)}
+                            name="ios-close-circle"
+                            size={30}
+                            color="red" />
+                    </View>
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-evenly' }}>
+                        <TouchableOpacity
+                            activeOpacity={.7}
+                            style={{
+                                width: '40%',
+                                height: 50,
+                                backgroundColor: 'orange',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }} onPress={() => {
+                                setFromOrTo(1)
+                                showDatepicker()
+                            }}>
+                            <Text style={styles.text}>{from}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={.7}
+                            style={{
+                                width: '40%',
+                                height: 50,
+                                backgroundColor: 'orange',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }} onPress={() => {
+                                setFromOrTo(0)
+                                showDatepicker()
+                            }}>
+                            <Text style={styles.text}>{to}</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-evenly' }}>
+                        <TouchableOpacity style={styles.loginBtn} onPress={() => {
+                            setFrom('from')
+                            setTo('to')
+                            setHideFilter(false)
+                            dispatch(noteActions.listNotes())
+                        }}>
+                            <Text style={styles.text}>Clear Filter</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.loginBtn} onPress={() => {
+                            setHideFilter(false)
+                            dispatch(noteActions.
+                                listNotes(
+                                    from.length == 4 ? undefined : from,
+                                    to.length == 2 ? undefined : to
+                                )
+                            )
+                        }}>
+                            <Text style={styles.text}>Apply Filter</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+            {show && (
+                <DateTimePicker
+                    testID="dateTimePicker"
+                    timeZoneOffsetInMinutes={0}
+                    value={date}
+                    mode={'date'}
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChange}
+                />
+            )}
+        </View>
+    )
+
+
+
 }

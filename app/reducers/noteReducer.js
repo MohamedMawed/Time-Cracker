@@ -6,13 +6,15 @@ import * as types from 'app/actions/types'
 
 const initialState = {
     notes: [],
-    underPWH:false
+    underPWH: false
 }
 
 export const noteReducer = createReducer(initialState, {
     [types.NOTES_REQUEST](state, action) {
         return {
             ...state,
+            from: action.from,
+            to: action.to
         }
     },
     [types.NOTES_RESPONSE](state, action) {
@@ -47,7 +49,7 @@ export const noteReducer = createReducer(initialState, {
     [types.PWH](state, action) {
         return {
             ...state,
-            PWH:action.PWH
+            PWH: action.PWH
         }
     },
     [types.PWH_GET](state, action) {
@@ -58,7 +60,7 @@ export const noteReducer = createReducer(initialState, {
     [types.PWH_RESULT](state, action) {
         return {
             ...state,
-            underPWH : action.pwh
+            underPWH: action.pwh
         }
     },
 })

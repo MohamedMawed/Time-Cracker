@@ -1,9 +1,18 @@
 import Api from 'app/api'
 import ApiConstants from '../ApiConstants'
 
-export function noteList(token) {
+export function noteList(from, to, token) {
+    qParams = ''
+    if (from) {
+        if (to)
+            qParams = '?from=' + from + '&to=' + to
+        else qParams = '?from=' + from
+    } else {
+        if (to)
+            qParams = '?to=' + to
+    }
     return Api(
-        ApiConstants.NOTE_CRUD,
+        ApiConstants.NOTE_CRUD + qParams,
         null,
         'get',
         token,
