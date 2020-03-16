@@ -28,7 +28,7 @@ export function* loginSaga(action) {
         yield put(loginActions.disableLoader({}))
         if (response.error)
             Toast.show(response.error)
-        if (response.error)
+        if (response.non_field_errors)
             Toast.show(response.non_field_errors[0])
             
         else Toast.show('Check Internet Connection')

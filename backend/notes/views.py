@@ -93,8 +93,6 @@ class SendReport(APIView):
         html_message=html_message
         )
         return Response({})            
-        # return Response(serializer.data)            
-
 
 
 
