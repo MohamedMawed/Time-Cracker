@@ -1,9 +1,3 @@
-/* Redux saga class
- * logins the user into the app
- * requires username and password.
- * un - username
- * pwd - password
- */
 import { put, call, select } from 'redux-saga/effects'
 import Toast from 'react-native-root-toast'
 import { loginUser, registerUser } from 'app/api/methods/loginUser'
@@ -16,8 +10,6 @@ export function* loginSaga(action) {
 
     //how to call api
     const response = yield call(loginUser, action.username, action.password)
-    //mock response
-    //   const response = { success: true, data: { id: 1 } }
     console.log(response)
     if (response.token) {
         yield put(loginActions.onLoginResponse(response))

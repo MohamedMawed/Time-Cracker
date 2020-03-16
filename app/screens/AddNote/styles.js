@@ -4,7 +4,7 @@ import metrics from 'app/config/metrics'
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
-        width: '100%', height: '100%', 
+        width: '100%', height: '100%',
     },
     input: {
         width: metrics.screenWidth * .835,
@@ -12,19 +12,36 @@ const styles = StyleSheet.create({
     dateTime: {
         width: metrics.screenWidth * .4,
     },
-    headerStyle:{
+    formContainer: {
+        justifyContent: 'center',
+        width: metrics.screenWidth,
+        alignItems: 'center'
+    },
+    dateField:{
+        width:metrics.screenWidth*.4,
+        height:55,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:'orange'
+    },
+    headerStyle: {
         width: '100%',
-        height: metrics.screenHeight*.08,
+        height: metrics.screenHeight * .08,
         backgroundColor: '#6200EE',
         flexDirection: 'row',
         alignItems: 'center',
         padding: 5,
         elevation: 5,
-        justifyContent:'center',
-        alignItems:'center',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    loginBtn: {
-        marginTop:metrics.screenHeight*.1,
+    headerText: {
+        fontFamily: 'sans-serif-medium',
+        fontSize: 25,
+        color: 'white'
+    },
+    saveBtn: {
+        marginTop: metrics.screenHeight * .1,
         backgroundColor: 'green',
         borderRadius: 3,
         color: '#ffffff',

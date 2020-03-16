@@ -6,6 +6,7 @@ import * as userActions from 'app/actions/userActions'
 import * as loginActions from 'app/actions/loginActions'
 import * as navigationActions from 'app/actions/navigationActions'
 import NavigationService from '../navigation/NavigationService'
+import Toast from 'react-native-root-toast'
 // import { NavigationActions } from 'react-navigation'
 
 
@@ -16,12 +17,14 @@ export function* userListSaga(action) {
     let token = yield select(getToken);
     const response = yield call(userList,token);
    
-    if (response) {
+    if (!response.detail) {
       yield put(userActions.onlistUsersResponse(response));
-      yield put(loginActions.disableLoader({}));
+      yield put(loginActions.disableLoader({}))
     } else {
-      Toast.show("Something Went Worng Please Try Again Later")
-      yield put(loginActions.disableLoader({}));
+        Toast.show("You no longer have an access")
+            yield put(loginActions.Logout())
+            NavigationService.reset('Login')
+      yield put(loginActions.disableLoader({}))
     }
   }
 
