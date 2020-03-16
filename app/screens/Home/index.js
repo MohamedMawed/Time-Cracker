@@ -56,11 +56,11 @@ export default function Home(props) {
     const data = [
         'Add Note',
         'Settings',
-        'Make A Report',
+        'Send A Report',
         'Logout']
     const notes = useSelector(state => state.noteReducer.notes)
     const pwh = useSelector(state => state.noteReducer.underPWH)
-    const user = useSelector(state => state.loginReducer.username)
+    const user = useSelector(state => state.loginReducer.userData)
     const [hideFilter, setHideFilter] = useState(false)
     const [HidePWH, setHidePWH] = useState(false)
     const [notesloading, setNotesloading] = useState(false)
@@ -119,7 +119,7 @@ export default function Home(props) {
         <View style={styles.container}>
             {/* this is the header compontent */}
             <View style={styles.headerStyle}>
-                <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 12 }}>{user}</Text>
+                <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 12 }}>{user ? user.user.username:''}</Text>
                 <FontAwesome5 onPress={() => setHideFilter(true)} style={{ flex: 2 }} name="filter" size={25} color="white" />
                 <ModalDropdown
                     textStyle={{ fontSize: 50, color: 'white', textAlignVertical: 'top', width: '100%', height: 100 }}
@@ -142,8 +142,8 @@ export default function Home(props) {
                                 ))
                                 return
                             case '3':
-                                dispatch(loginActions.Logout())
                                 NavigationService.reset('Login')
+                                dispatch(loginActions.Logout())
                                 return
                         }
                     }}

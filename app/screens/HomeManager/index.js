@@ -50,6 +50,7 @@ export default function HomeManager() {
     const dispatch = useDispatch()
     const users = useSelector(state => state.userReducer.users)
     const [useresloading, setNotesloading] = useState(false)
+    const user = useSelector(state => state.loginReducer.userData)
 
     const loadUsers = () => dispatch(userActions.listUsers())
     useEffect(() => {
@@ -79,7 +80,7 @@ export default function HomeManager() {
         <View style={styles.container}>
             {/* this is the header compontent */}
             <View style={styles.headerStyle}>
-                <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 18 }}>Mohamed Mawed</Text>
+                <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 18 }}>{user ? user.user.username:''}</Text>
                 <AntDesign onPress={() => {
                     dispatch(loginActions.Logout())
                     NavigationService.reset('Login')

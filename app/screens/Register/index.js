@@ -56,6 +56,7 @@ export default function Register() {
             <OutlinedTextField
                 containerStyle={styles.input}
                 inputContainerStyle={styles.input}
+                maxLength={30}          
                 label='User Name'
                 value={name}
                 onChangeText={(text)=>setName(text)}
@@ -64,6 +65,7 @@ export default function Register() {
             <OutlinedTextField
                 containerStyle={styles.input}
                 inputContainerStyle={styles.input}
+                maxLength={70}          
                 label='Email'
                 value={mail}
                 onChangeText={(text)=>setMail(text)}
@@ -73,6 +75,7 @@ export default function Register() {
                 containerStyle={styles.input}
                 inputContainerStyle={styles.input}
                 label='Password'
+                maxLength={30}          
                 value={password}
                 secureTextEntry
                 onChangeText={(text)=>setPassword(text)}
@@ -82,6 +85,7 @@ export default function Register() {
                 containerStyle={styles.input}
                 label='Confirm Password'
                 inputContainerStyle={styles.input}
+                maxLength={30}          
                 secureTextEntry
                 value={confirmPass}
                 onChangeText={(text)=>setconfirmPass(text)}
@@ -105,7 +109,7 @@ export default function Register() {
                 }}>
                 <Text style={styles.text}>Register</Text>
             </TouchableOpacity>
-            <Text onPress={() => NavigationService.replace('Login')} style={styles.createAtext}>Have An Account ? Login</Text>
+            <Text onPress={() => NavigationService.navigate('Login')} style={styles.createAtext}>Have An Account ? Login</Text>
 
         </View>
     );

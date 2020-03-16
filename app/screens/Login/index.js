@@ -32,7 +32,8 @@ export default function Login() {
             <View style={styles.seperator1} />
             <OutlinedTextField
                 containerStyle={styles.input}
-                inputContainerStyle={styles.input}                
+                inputContainerStyle={styles.input}      
+                maxLength={30}          
                 label='User Name*'
                 onChangeText={(text)=>setName(text)}
             />
@@ -40,6 +41,7 @@ export default function Login() {
             <OutlinedTextField
                 containerStyle={styles.input}
                 inputContainerStyle={styles.input}                
+                maxLength={30}          
                 label='Password*'
                 secureTextEntry
                 onChangeText={(text)=>setPassword(text)}
@@ -52,7 +54,7 @@ export default function Login() {
                 <Text style={styles.text}>login</Text>
             </TouchableOpacity>
             <Text 
-                onPress={()=>NavigationService.replace('Register')}
+                onPress={()=>NavigationService.navigate('Register')}
                 style={styles.createAtext}>
                     Create A New Account
             </Text>
