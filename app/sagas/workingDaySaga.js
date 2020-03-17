@@ -66,6 +66,7 @@ export function* noteListSaga(action) {
       yield put(workingDayActions.getPwhResponse(response.prefferedWorkingHours))
       yield put(authActions.disableLoader({}))
     } else {
+      yield put(workingDayActions.getPwhResponse(0))
       yield put(authActions.disableLoader({}))
     }
   }
