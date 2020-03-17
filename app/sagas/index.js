@@ -9,8 +9,6 @@ import {
     noteDelSaga,
     noteAddSaga,
     noteEditSaga,
-    PWHSaga,
-    TodayPWHSaga,
     sendReportSaga
 } from './noteSaga'
 import { 
@@ -34,10 +32,6 @@ export default function* watch() {
         takeLatest(types.NOTES_ADD, noteAddSaga),
         takeLatest(types.NOTES_EDIT, noteEditSaga),
 
-        // for changing the PWH
-        takeLatest(types.PWH, PWHSaga),
-        takeLatest(types.PWH_GET, TodayPWHSaga),
-        
         // this is for the user manager type
         takeLatest(types.USERS_REQUEST, userListSaga),
         takeLatest(types.USERS_DELETE, userDelSaga),

@@ -17,11 +17,13 @@ export function* sendReportSaga(action) {
     let token = yield select(getToken)
     const response = yield call(sendReport, action.from, action.to, token)
 
-    if (response) {
+    if (response.message) {
       yield put(authActions.disableLoader({}))
       Toast.show('Report sent to your mail successfully')
     } else {
-      Toast.show('there is a problem sending you the report')
+        if(response.detail)
+            Toast.show(response.detail)
+        else  Toast.show('something went wrong')
       yield put(authActions.disableLoader({}))
     }
   }
@@ -84,31 +86,3 @@ export function* noteListSaga(action) {
     }
   }
 
-
-  export function* PWHSaga(action) {
-    yield put(authActions.enableLoader())
-    let token = yield select(getToken)
-    const response = yield call(changePWH, token)
-    
-    if (response) {
-      yield put(noteActions.listNotes())
-      yield put(authActions.disableLoader({}))
-    } else {
-      yield put(authActions.disableLoader({}))
-      Toast.show('something went wrong')
-    }
-  }
-
-  export function* TodayPWHSaga(action) {
-    yield put(authActions.enableLoader())
-    let token = yield select(getToken)
-    const response = yield call(getPWH, token)
-    
-    if (response) {
-      yield put(noteActions.setTodayPWH(response.underPWH))
-      yield put(authActions.disableLoader({}))
-    } else {
-      yield put(authActions.disableLoader({}))
-      Toast.show('something went wrong')
-    }
-  }

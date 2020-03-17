@@ -132,7 +132,7 @@ export default function Home(props) {
         <View style={styles.container}>
             {/* this is the header compontent */}
             <View style={styles.headerStyle}>
-                <Text style={{ fontFamily: 'Sen-Bold', fontSize: 20, color: 'white', flex: 12 }}>{user ? user.user.username : ''}</Text>
+                <Text style={styles.headerText}>{user ? user.user.username : 'Home'}</Text>
                 <FontAwesome5 onPress={() => setHideFilter(true)} style={{ flex: 2 }} name="filter" size={25} color="white" />
                 <ModalDropdown
                     dropdownTextStyle={{
@@ -152,15 +152,12 @@ export default function Home(props) {
                                 NavigationService.navigate('AddNote')
                                 return
                             case '1':
-                                setHidePWH(true)
-                                return
-                            case '2':
                                 dispatch(noteActions.sendReport(
                                     from.length == 4 ? undefined : from,
                                     to.length == 2 ? undefined : to
                                 ))
                                 return
-                            case '3':
+                            case '2':
                                 NavigationService.reset('Login')
                                 dispatch(authActions.Logout())
                                 return

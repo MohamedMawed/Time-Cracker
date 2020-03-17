@@ -14,7 +14,7 @@ export default function RootStack() {
     return (
         <Stack.Navigator
             headerMode="none"
-            initialRouteName="AddNote"
+            initialRouteName="Splash"
             screenOptions={{ gestureEnabled: false }}
         >
             <Stack.Screen

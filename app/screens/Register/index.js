@@ -16,7 +16,6 @@ export default function Register() {
     const dispatch = useDispatch()
     const [name, setName] = useState("")
     const [mail, setMail] = useState("")
-    const [IsUserManager, setIsUserManager] = useState(false)
     const [password, setPassword] = useState("")
     const [confirmPass, setconfirmPass] = useState("")
     const onRegister = () => dispatch(authActions.requestRegister(
@@ -24,7 +23,6 @@ export default function Register() {
             'username': name,
             'email': mail,
             'password': password,
-            'is_user_manager': IsUserManager
         }))
 
     // validate the user data
@@ -89,18 +87,6 @@ export default function Register() {
                 secureTextEntry
                 value={confirmPass}
                 onChangeText={(text)=>setconfirmPass(text)}
-            />
-            <View style={styles.seperator} />
-            <ModalDropdown
-                defaultValue={userTypes[0]}
-                style={[styles.input, { backgroundColor: 'lightgray', justifyContent: 'center', }]}
-                textStyle={{ fontSize: 18, color: 'white', width: '100%', padding: 10 }}
-                dropdownStyle={[styles.input, { height: 72 }]}
-                options={userTypes}
-                onSelect={(index, value) => {
-                    if (index == 0) setIsUserManager(0)
-                    else setIsUserManager(1)
-                }}
             />
             <View style={styles.seperator} />
             <TouchableOpacity style={styles.loginBtn} onPress={()=>{
