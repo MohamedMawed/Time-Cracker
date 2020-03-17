@@ -1,14 +1,14 @@
 /* App config for apis
  */
 const ApiConstants = {
-  BASE_URL: 'http://192.168.1.10:8000/',
+  BASE_URL: 'http://192.168.1.10:8000/api/',
   LOGIN: 'auth/login/',
   REGISTER: 'auth/register/',
-  NOTE_CRUD: 'api/note/',
-  PWH: 'api/pwh/',
-  SEND_REPORT: 'api/note/sendreport/',
-  PWH_TODAY: 'api/pwh/today/',
-  USER_CRUD: 'auth/user/'
+  NOTE_CRUD: 'notes/',
+  PWH: 'pwh/',
+  SEND_REPORT: 'note/sendreport/',
+  PWH_TODAY: 'pwh/today/',
+  USER_CRUD: 'auth/users/'
 };
 
 export default ApiConstants;

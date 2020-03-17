@@ -48,10 +48,6 @@ export default function RootStack() {
                 component={EditNote}
             />
             <Stack.Screen
-                name="AddUser"
-                component={AddUser}
-            />
-            <Stack.Screen
                 name="EditUser"
                 component={EditUser}
             />

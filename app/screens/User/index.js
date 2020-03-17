@@ -13,23 +13,27 @@ import { ValidateEmail } from '../../utils/stringUtils';
 
 const userTypes = ["Regular User", "Users Manager"]
 
-export default function EditUser({route}) {
+export default function UserAddOrEdit({route}) {
     const dispatch = useDispatch()
-    const [user, setUser] = useState(route.params?.user ?? {})
+    const [user, setUser] = useState(route.params ? route.params.user : { username: '', email: '', is_user_manager: 0 })
     const [name, setName] = useState(user.username)
     const [mail, setMail] = useState(user.email)
     const [IsUserManager, setIsUserManager] = useState(user.is_user_manager)
-    const [password, setPassword] = useState(user.password_unhashed)
-    const onRegister = () => dispatch(userActions.editUser(user.user_id,{
+
+    const onEditUser = () => dispatch(userActions.editUser(user.user_id,{
         'username': name,
         'email': mail,
-        'password': password,
+        'is_user_manager': IsUserManager
+    }))
+    const onAddUser = () => dispatch(userActions.addUser({
+        'username': name,
+        'email': mail,
         'is_user_manager': IsUserManager
     }))
 
     // validate the user data
     const validate = () => {
-        if (name == '' || password == '' || mail == '') {
+        if (name == '' || mail == '') {
             Toast.show('Please complete the missing fields')
             return false
         }
@@ -54,7 +58,7 @@ export default function EditUser({route}) {
                     color: 'white',
                     flex: 1,
                     textAlign: 'center'
-                }}>Edit User</Text>
+                }}>{route.params ? "Edit User" : "Add User"}</Text>
             </View>
             <View style={styles.seperator1} />
             <View style={styles.seperator1} />
@@ -75,15 +79,6 @@ export default function EditUser({route}) {
                 onChangeText={(text) => setMail(text)}
             />
             <View style={styles.seperator1} />
-            <OutlinedTextField
-                containerStyle={styles.input}
-                inputContainerStyle={styles.input}
-                label='Password'
-                value={password}
-                secureTextEntry
-                onChangeText={(text) => setPassword(text)}
-            />
-            <View style={styles.seperator1} />
             <ModalDropdown
                 defaultValue={IsUserManager?userTypes[1]:userTypes[0]}
                 style={[styles.input, { backgroundColor: 'lightgray', justifyContent: 'center', }]}
@@ -96,10 +91,9 @@ export default function EditUser({route}) {
                 }}
             />
             <View style={styles.seperator1} />
-            <View style={styles.seperator1} />
             <TouchableOpacity style={styles.loginBtn} onPress={() => {
                 if (validate())
-                    onRegister()
+                    route.params ? onEditUser() : onAddUser()
             }}>
                 <Text style={styles.text}>Save</Text>
             </TouchableOpacity>

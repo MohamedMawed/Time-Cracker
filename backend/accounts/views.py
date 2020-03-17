@@ -28,8 +28,6 @@ class Signup(APIView):
             serializer = UserSerializer(data=request.data)
             if serializer.is_valid():
                 user = serializer.save()
-                # saving the password before hashing it for the user manager to be able to see it
-                user.password_unhashed = request.data['password']
                 user.save()
                 token = generate_token(user)
                 return Response({"token": token, "user": serializer.data}, status=status.HTTP_201_CREATED)
@@ -53,8 +51,6 @@ class UserList(generics.ListCreateAPIView):
             serializer = UserSerializer(data=request.data)
             if serializer.is_valid():
                 user = serializer.save()
-                # saving the password before hashing it for the user manager to be able to see it
-                user.password_unhashed = request.data['password']
                 user.save()
                 token = generate_token(user)
                 return Response({"message": "User Created"}, status=status.HTTP_201_CREATED)

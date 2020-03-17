@@ -15,7 +15,6 @@ export function checkUserType(userData){
 }
 export function navigateToHome(params) {
     let screen = checkUserType(params)
-    console.log(screen)
     NavigationService.reset(screen)
 }
 export function replaceToHome() {

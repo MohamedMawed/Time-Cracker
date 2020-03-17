@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, Text, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
-import * as loginActions from 'app/actions/loginActions'
+import * as authActions from 'app/actions/authActions'
 import styles from './styles';
 import { OutlinedTextField } from 'react-native-material-textfield'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -13,7 +13,7 @@ export default function Login() {
     const dispatch = useDispatch()
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
-    const onLogin = () => dispatch(loginActions.requestLogin(name,password))
+    const onLogin = () => dispatch(authActions.requestLogin(name,password))
 
     const validate = () => {
         if( name.length == 0 || password.length == 0 ){

@@ -9,7 +9,7 @@ import styles from './styles'
 import Modal from "react-native-modal"
 import { OutlinedTextField } from 'react-native-material-textfield'
 import metrics from 'app/config/metrics'
-import * as loginActions from 'app/actions/loginActions'
+import * as authActions from 'app/actions/authActions'
 import NavigationService from 'app/navigation/NavigationService'
 import { useDispatch, useSelector } from 'react-redux'
 import * as noteActions from 'app/actions/noteActions'
@@ -60,7 +60,7 @@ export default function Home(props) {
         'Logout']
     const notes = useSelector(state => state.noteReducer.notes)
     const pwh = useSelector(state => state.noteReducer.underPWH)
-    const user = useSelector(state => state.loginReducer.userData)
+    const user = useSelector(state => state.authReducer.userData)
     const [hideFilter, setHideFilter] = useState(false)
     const [HidePWH, setHidePWH] = useState(false)
     const [notesloading, setNotesloading] = useState(false)
@@ -87,7 +87,6 @@ export default function Home(props) {
             [
                 {
                     text: 'Cancel',
-                    onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel',
                 },
                 { text: 'OK', onPress: () => dispatch(noteActions.delNote(NoteId)) },
@@ -97,7 +96,7 @@ export default function Home(props) {
     }
 
     const editNote = (Note) => {
-        NavigationService.navigate("EditNote", { Note })
+        NavigationService.navigate("AddNote", { Note })
     }
 
     const onChange = (event, selectedDate) => {
@@ -143,7 +142,7 @@ export default function Home(props) {
                                 return
                             case '3':
                                 NavigationService.reset('Login')
-                                dispatch(loginActions.Logout())
+                                dispatch(authActions.Logout())
                                 return
                         }
                     }}

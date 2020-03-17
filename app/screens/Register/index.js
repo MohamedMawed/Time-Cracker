@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, Text, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import * as loginActions from 'app/actions/loginActions';
+import * as authActions from 'app/actions/authActions';
 import styles from './styles';
 import { OutlinedTextField } from 'react-native-material-textfield'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -19,7 +19,7 @@ export default function Register() {
     const [IsUserManager, setIsUserManager] = useState(false)
     const [password, setPassword] = useState("")
     const [confirmPass, setconfirmPass] = useState("")
-    const onRegister = () => dispatch(loginActions.requestRegister(
+    const onRegister = () => dispatch(authActions.requestRegister(
         {
             'username': name,
             'email': mail,

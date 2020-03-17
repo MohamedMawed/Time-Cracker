@@ -4,5 +4,5 @@
 import * as loadingReducer from './loadingReducer'
 import * as userReducer from './userReducer'
 import * as noteReducer from './noteReducer'
-import * as loginReducer from './loginReducer'
-export default Object.assign(loginReducer, loadingReducer, noteReducer, userReducer)
+import * as authReducer from './authReducer'
+export default Object.assign(authReducer, loadingReducer, noteReducer, userReducer)

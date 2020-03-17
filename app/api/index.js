@@ -10,8 +10,8 @@ export default function api(path, params, method, token) {
     },
     method: method,
     ...(params && { body: JSON.stringify(params) }),
-  };
-  console.log(ApiConstants.BASE_URL + path)
+  }
+  
   return fetch(ApiConstants.BASE_URL + path, options)
     .then(resp => resp.json())
     .then(json => json)

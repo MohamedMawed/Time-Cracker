@@ -7,11 +7,9 @@ from django.contrib.auth.models import Group
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('email', 'username', 'password_unhashed', 'is_user_manager')
+    list_display = ('email', 'username', 'is_user_manager')
     list_filter = ('is_staff', 'is_user_manager')
 
-
-# admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
 

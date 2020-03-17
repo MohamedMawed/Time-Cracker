@@ -40,8 +40,6 @@ export function editUser(id, user, token) {
         ApiConstants.USER_CRUD + id + '/',
         {
             "username": user.username,
-            "password": user.password,
-            "password_unhashed": user.password,
             "email": user.email,
             "is_user_manager": user.is_user_manager,
         },

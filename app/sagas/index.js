@@ -3,7 +3,7 @@
  */
 import { takeLatest, all } from 'redux-saga/effects'
 import * as types from '../actions/types'
-import { loginSaga, registerSaga } from './loginSaga'
+import { loginSaga, registerSaga } from './authSaga'
 import {
     noteListSaga,
     noteDelSaga,

@@ -9,7 +9,7 @@ import NavigationService from '../../navigation/NavigationService';
 
 export default function Splash(props) {
     const dispatch = useDispatch()
-    const userData = useSelector(state => state.loginReducer.userData)
+    const userData = useSelector(state => state.authReducer.userData)
     useEffect(() => {
         setTimeout(()=>{
            NavigationService.reset(checkUserType(userData))

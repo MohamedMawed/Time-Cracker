@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, ScrollView, Text, Button } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import ModalDropdown from 'react-native-modal-dropdown'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import styles from './styles'
-import Modal from "react-native-modal"
 import { OutlinedTextField } from 'react-native-material-textfield'
 import metrics from 'app/config/metrics'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useDispatch } from 'react-redux'
 import * as noteActions from 'app/actions/noteActions'
+import { useDispatch } from 'react-redux'
 import Toast from 'react-native-root-toast'
 
 
-export default function EditNote({route }) {
-    const [note, setNote] = useState(route.params?.Note ?? {})
+
+
+export default function AddNote({route}) {
+
+    const dispatch = useDispatch()
+    const [note, setNote] = useState(route.params ? route.params.Note : { note: '', date: new Date().toISOString().split('T')[0], hours: 1 })
     const [start, setStart] = useState(note.date)
     const [hours, setHours] = useState(note.hours)
 
@@ -24,22 +23,21 @@ export default function EditNote({route }) {
     // validate the note before saving it
     const validate = () => {
         let temp = note;
-        if(!hours || hours <= 0 || hours > 24){
+        if (!hours || hours <= 0 || hours > 24) {
             Toast.show("please enter a valid number of hours worked")
-            return false            
+            return false
         }
         if (temp.note.length == 0) {
             Toast.show("you can't leave the note empty")
             return false
         }
-        setNote({...note , hours: hours , date: start})
+        setNote({ ...note, hours: hours, date: start })
         return true
     }
     // data for the datetime picker
-    const [date, setDate] = useState(new Date("2015-03-25T12:00:00Z"));
-    const [mode, setMode] = useState('date');
-    const [show, setShow] = useState(false);
-    const dispatch = useDispatch()
+    const [date, setDate] = useState(new Date());
+    const [show, setShow] = useState(false)
+
 
     const onChange = (event, selectedDate) => {
         if (!selectedDate) return // if the user click cancel for the date time picker
@@ -49,32 +47,21 @@ export default function EditNote({route }) {
         setStart(selectedDate.toISOString().split('T')[0].toString())
         setNote({ ...note, date: selectedDate.toISOString().split('T')[0].toString() })
 
-    };
-
-    const showMode = currentMode => {
-        setShow(true);
-        setMode(currentMode);
-    };
+    }
 
     const showDatepicker = () => {
-        showMode('date');
-    };
+        setShow(true)
+    }
 
     return (
         <View style={styles.container}>
             <ScrollView keyboardShouldPersistTaps={'handled'} >
                 {/* this is the header compontent */}
                 <View style={styles.headerStyle}>
-                    <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 25, color: 'white', }}>Edit Note</Text>
+                    <Text style={styles.headerText}>{route.params ? 'Edit Note' : 'Add Note'}</Text>
                 </View>
 
-
-
-                <View style={{
-                    justifyContent: 'center',
-                    width: metrics.screenWidth,
-                    alignItems: 'center'
-                }}>
+                <View style={styles.formContainer}>
                     <View style={styles.seperator1} />
                     <OutlinedTextField
                         multiline
@@ -103,22 +90,16 @@ export default function EditNote({route }) {
                         justifyContent: 'space-evenly',
                     }}>
                         <TouchableOpacity
-                            style={{
-                                width:metrics.screenWidth*.4,
-                                height:55,
-                                justifyContent:'center',
-                                alignItems:'center',
-                                backgroundColor:'orange'
-                            }}
+                            style={styles.dateField}
                             onPress={() => {
                                 setDate(new Date(start))
                                 showDatepicker()
                             }}
                         >
-                            <Text style={{color:'white',fontSize:18,fontWeight:'bold'}}>{start}</Text>
+                            <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>{start}</Text>
                         </TouchableOpacity>
                         <OutlinedTextField
-                            containerStyle={{width:metrics.screenWidth*.4}}
+                            containerStyle={{ width: metrics.screenWidth * .4 }}
                             // inputContainerStyle={styles.input}
                             label='# of hours'
                             onChangeText={(text) => {
@@ -132,9 +113,9 @@ export default function EditNote({route }) {
                     <View style={styles.seperator1} />
                     <TouchableOpacity onPress={() => {
                         if (validate())
-                            dispatch(noteActions.editNote(note.id,note))
+                            route.params ? dispatch(noteActions.editNote(note.id,note)) : dispatch(noteActions.addNote(note))
 
-                    }} style={styles.loginBtn}>
+                    }} style={styles.saveBtn}>
                         <Text style={styles.text}>Save</Text>
                     </TouchableOpacity>
 
@@ -145,7 +126,7 @@ export default function EditNote({route }) {
                     testID="dateTimePicker"
                     timeZoneOffsetInMinutes={0}
                     value={date}
-                    mode={mode}
+                    mode={'date'}
                     is24Hour={true}
                     display="default"
                     onChange={onChange}

@@ -3,7 +3,7 @@ import { View, TouchableOpacity, FlatList, Alert, Text } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import * as loginActions from 'app/actions/loginActions'
+import * as authActions from 'app/actions/authActions'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import styles from './styles'
 import NavigationService from 'app/navigation/NavigationService'
@@ -19,14 +19,13 @@ const UserCard = ({ User, onDel, onEdit }) => {
 
     return (
         <View style={styles.cardStyle}>
-            <Text style={styles.headerText}>
+            <Text style={styles.photoContainer}>
                 <MaterialCommunityIcons name="timetable" size={40} color="white" />
             </Text>
             <View style={{ flex: 14, paddingHorizontal: 5 }}>
                 <Text style={styles.userTextStyle}>UserName: {User.username}</Text>
                 <Text style={styles.userTextStyle}>Email: {User.email}</Text>
                 <Text style={[styles.userTextStyle, { color: color }]}>User Type: {type}</Text>
-                <Text style={[styles.userTextStyle, { color: 'red' }]}>Password: {User.password_unhashed}</Text>
             </View>
             <View style={{
                 flex: 2,
@@ -50,7 +49,7 @@ export default function HomeManager() {
     const dispatch = useDispatch()
     const users = useSelector(state => state.userReducer.users)
     const [useresloading, setNotesloading] = useState(false)
-    const user = useSelector(state => state.loginReducer.userData)
+    const user = useSelector(state => state.authReducer.userData)
 
     const loadUsers = () => dispatch(userActions.listUsers())
     useEffect(() => {
@@ -63,7 +62,6 @@ export default function HomeManager() {
             [
                 {
                     text: 'Cancel',
-                    onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel',
                 },
                 { text: 'OK', onPress: () => dispatch(userActions.delUser(UserId)) },
@@ -71,21 +69,18 @@ export default function HomeManager() {
         );
 
     }
-
-    const editUser = (user) => {
-        NavigationService.navigate("EditUser", { user })
-    }
+    const editUser = (user) => NavigationService.navigate("EditUser", { user })
+    
 
     return (
         <View style={styles.container}>
             {/* this is the header compontent */}
             <View style={styles.headerStyle}>
-                <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 18 }}>{user ? user.user.username:''}</Text>
+                <Text style={styles.headerText}>{user ? user.user.username:''}</Text>
                 <AntDesign onPress={() => {
-                    dispatch(loginActions.Logout())
+                    dispatch(authActions.Logout())
                     NavigationService.reset('Login')
-                }} style={{ flex: 3 }} name="logout" size={28} color="white" />
-                <FontAwesome5 onPress={() => NavigationService.navigate('AddUser')} style={{ flex: 2 }} name="plus" size={25} color="white" />
+                }} style={{ flex: 1 }} name="logout" size={28} color="white" />
             </View>
 
             {/* this is for the User Card With Actions */}
@@ -93,7 +88,7 @@ export default function HomeManager() {
                 contentContainerStyle={{ alignItems: 'center' }}
                 data={users ? users : []}
                 refreshing={useresloading}
-                // onRefresh={loadUsers}
+                onRefresh={loadUsers}
                 keyExtractor={(item) => item.user_id.toString()}
                 renderItem={({ item }) => <UserCard User={item} onDel={deleteUser} onEdit={editUser} />}
             />

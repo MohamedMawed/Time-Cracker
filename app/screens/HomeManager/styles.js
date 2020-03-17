@@ -12,6 +12,11 @@ const styles = StyleSheet.create({
     userTextStyle: {
 
     },
+    headerText:{ 
+        fontFamily: 'sans-serif-medium',
+        fontSize: 20,
+        color: 'white',
+        flex: 9 },
     cardStyle:{
         width: metrics.screenWidth * .95,
         borderRadius: 4,
@@ -22,7 +27,7 @@ const styles = StyleSheet.create({
         marginTop:10,
         flexDirection: 'row'
     },
-    headerText: {
+    photoContainer: {
         fontSize: 40,
         color: 'white',
         fontWeight: '200',

@@ -1,23 +1,22 @@
 import { put, call, select } from 'redux-saga/effects'
 import Toast from 'react-native-root-toast'
-import { loginUser, registerUser } from 'app/api/methods/loginUser'
-import * as loginActions from 'app/actions/loginActions'
+import { loginUser, registerUser } from 'app/api/methods/authMethods'
+import * as authActions from 'app/actions/authActions'
 import * as navigationActions from 'app/actions/navigationActions'
 
-// Our worker Saga that logins the user
-export function* loginSaga(action) {
-    yield put(loginActions.enableLoader())
 
-    //how to call api
+export function* loginSaga(action) {
+    yield put(authActions.enableLoader())
+
     const response = yield call(loginUser, action.username, action.password)
-    console.log(response)
+
     if (response.token) {
-        yield put(loginActions.onLoginResponse(response))
-        yield put(loginActions.disableLoader({}))
+        yield put(authActions.onLoginResponse(response))
+        yield put(authActions.disableLoader({}))
         navigationActions.navigateToHome(response)
     } else {
-        yield put(loginActions.loginFailed())
-        yield put(loginActions.disableLoader({}))
+        yield put(authActions.loginFailed())
+        yield put(authActions.disableLoader({}))
         if (response.error)
             Toast.show(response.error)
         if (response.non_field_errors)
@@ -30,21 +29,18 @@ export function* loginSaga(action) {
 
 // Our worker Saga that registers the user
 export function* registerSaga(action) {
-    yield put(loginActions.enableLoader())
+    yield put(authActions.enableLoader())
 
-    //how to call api
     const response = yield call(registerUser,action.user)
-    //mock response
-    //   const response = { success: true, data: { id: 1 } }
 
     if (response.token) {
-        yield put(loginActions.onLoginResponse(response))
-        yield put(loginActions.disableLoader({}))
+        yield put(authActions.onLoginResponse(response))
+        yield put(authActions.disableLoader({}))
         
         navigationActions.navigateToHome(response)
     } else {
-        yield put(loginActions.loginFailed())
-        yield put(loginActions.disableLoader({}))
+        yield put(authActions.loginFailed())
+        yield put(authActions.disableLoader({}))
         if (response.error)
             Toast.show(response.error)
         else Toast.show('Check Internet Connection')
