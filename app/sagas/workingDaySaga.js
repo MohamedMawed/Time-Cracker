@@ -90,7 +90,7 @@ export function* noteListSaga(action) {
   export function* noteDelSaga(action) {
     yield put(authActions.enableLoader())
     let token = yield select(getToken)
-    const response = yield call(delNote,action.note_id,token)
+    const response = yield call(delNote,action.workingDay_id,token)
 
     if (response) {
       yield put(workingDayActions.listNotes())

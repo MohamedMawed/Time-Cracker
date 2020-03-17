@@ -68,6 +68,7 @@ export default function Home({route}) {
         // loadSettings()
     }, [])
     const deleteWorkingDay = (NoteId) => {
+
         Alert.alert(
             'Delete Working Day',
             'Are you sure to delete that day ?',
@@ -76,7 +77,10 @@ export default function Home({route}) {
                     text: 'Cancel',
                     style: 'cancel',
                 },
-                { text: 'OK', onPress: () => dispatch(workingDayActions.delNote(NoteId)) },
+                { text: 'OK', onPress: () => {
+                    dispatch(workingDayActions.delNote(NoteId)) 
+                    loadWorkingDays()
+                }},
             ]
         )
     }
@@ -94,6 +98,7 @@ export default function Home({route}) {
             <FlatList
                 contentContainerStyle={{ alignItems: 'center' }}
                 data={notes}
+
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => <WorkingDay workingDay={item} onDel={deleteWorkingDay} />}
             />

@@ -27,7 +27,7 @@ export const workingDayReducer = createReducer(initialState, {
     [types.WORKING_DAY_DELETE](state, action) {
         return {
             ...state,
-            note_id: action.note_id
+            workingDay_id: action.workingDay_id
         }
     },
     [types.WORKING_DAY_ADD](state, action) {
