@@ -10,7 +10,7 @@ import sagas from 'app/sagas';
 const config = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['loadingReducer', 'noteReducer', 'userReducer'],
+  blacklist: ['loadingReducer', 'workingDayReducer', 'userReducer'],
   debug: true, //to get useful logging
 };
 

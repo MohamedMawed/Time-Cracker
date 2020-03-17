@@ -3,6 +3,6 @@
  */
 import * as loadingReducer from './loadingReducer'
 import * as userReducer from './userReducer'
-import * as noteReducer from './noteReducer'
+import * as workingDayReducer from './workingDayReducer'
 import * as authReducer from './authReducer'
-export default Object.assign(authReducer, loadingReducer, noteReducer, userReducer)
+export default Object.assign(authReducer, loadingReducer, workingDayReducer, userReducer)

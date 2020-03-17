@@ -1,8 +1,8 @@
 
 import { put, call, select } from 'redux-saga/effects'
 
-import { noteList, delNote, editNote, addNote, changePWH, getPWH, sendReport } from 'app/api/methods/noteMethods'
-import * as noteActions from 'app/actions/noteActions'
+import { noteList, delNote, editNote, addNote, changePWH, getPWH, sendReport } from 'app/api/methods/workingDayMethods'
+import * as workingDayActions from 'app/actions/workingDayActions'
 import * as authActions from 'app/actions/authActions'
 import NavigationService from '../navigation/NavigationService'
 import Toast from 'react-native-root-toast'
@@ -35,10 +35,10 @@ export function* noteListSaga(action) {
     const response = yield call(noteList, action.from, action.to, token)
 
     if (response) {
-      yield put(noteActions.onlistNotesResponse(response))
+      yield put(workingDayActions.onlistNotesResponse(response))
       yield put(authActions.disableLoader({}))
     } else {
-      yield put(noteActions.listNotesFailed())
+      yield put(workingDayActions.listNotesFailed())
       yield put(authActions.disableLoader({}))
     }
   }
@@ -50,7 +50,7 @@ export function* noteListSaga(action) {
     const response = yield call(delNote,action.note_id,token)
 
     if (response) {
-      yield put(noteActions.listNotes())
+      yield put(workingDayActions.listNotes())
       yield put(authActions.disableLoader({}))
     } else {
       yield put(authActions.disableLoader({}))
@@ -62,11 +62,13 @@ export function* noteListSaga(action) {
     yield put(authActions.enableLoader())
     let token = yield select(getToken)
     const response = yield call(addNote, action.note, token)
-    if (response) {
-      yield put(noteActions.listNotes())
+    if (!response.details) {
+      yield put(workingDayActions.listNotes())
       yield put(authActions.disableLoader({}))
       NavigationService.reset('Home')
     } else {
+        if(response.details.non_field_errors)
+            Toast.show('you already have this day please edit it from the home page')
       yield put(authActions.disableLoader({}))
     }
   }
@@ -77,7 +79,7 @@ export function* noteListSaga(action) {
     const response = yield call(editNote, action.note_id, action.note, token)
     
     if (response) {
-      yield put(noteActions.listNotes())
+      yield put(workingDayActions.listNotes())
       yield put(authActions.disableLoader({}))
       NavigationService.reset('Home')
     } else {

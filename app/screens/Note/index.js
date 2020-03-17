@@ -4,7 +4,7 @@ import styles from './styles'
 import { OutlinedTextField } from 'react-native-material-textfield'
 import metrics from 'app/config/metrics'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import * as noteActions from 'app/actions/noteActions'
+import * as workingDayActions from 'app/actions/workingDayActions'
 import { useDispatch } from 'react-redux'
 import Toast from 'react-native-root-toast'
 import Feather from 'react-native-vector-icons/Feather'
@@ -173,9 +173,9 @@ export default function AddNote({ route }) {
                     })}
                     <TouchableOpacity onPress={() => {
                         if (validate())
-                            route.params ? dispatch(noteActions.editNote(note.id, note))
+                            route.params ? dispatch(workingDayActions.editNote(note.id, note))
                                 :
-                                dispatch(noteActions.addNote(note))
+                                dispatch(workingDayActions.addNote(note))
                     }} style={styles.saveBtn}>
                         <Text style={styles.text}>Save</Text>
                     </TouchableOpacity>

@@ -9,7 +9,7 @@ const initialState = {
     underPWH: false
 }
 
-export const noteReducer = createReducer(initialState, {
+export const workingDayReducer = createReducer(initialState, {
     [types.NOTES_REQUEST](state, action) {
         return {
             ...state,

@@ -12,7 +12,7 @@ import metrics from 'app/config/metrics'
 import * as authActions from 'app/actions/authActions'
 import NavigationService from 'app/navigation/NavigationService'
 import { useDispatch, useSelector } from 'react-redux'
-import * as noteActions from 'app/actions/noteActions'
+import * as workingDayActions from 'app/actions/workingDayActions'
 import { Switch } from 'react-native-gesture-handler'
 import DateTimePicker from '@react-native-community/datetimepicker'
 
@@ -76,14 +76,14 @@ export default function Home(props) {
         'Add Working Day',
         'Send A Report',
         'Logout']
-    const notes = useSelector(state => state.noteReducer.notes)
-    const pwh = useSelector(state => state.noteReducer.underPWH)
+    const notes = useSelector(state => state.workingDayReducer.notes)
+    const pwh = useSelector(state => state.workingDayReducer.underPWH)
     const user = useSelector(state => state.authReducer.userData)
     const [hideFilter, setHideFilter] = useState(false)
     const [HidePWH, setHidePWH] = useState(false)
     const [notesloading, setNotesloading] = useState(false)
     const [preferredWorkingHours, setPreferredWorkingHours] = useState(pwh)
-    const loadNotes = () => dispatch(noteActions.listNotes())
+    const loadNotes = () => dispatch(workingDayActions.listNotes())
 
 
     const [date, setDate] = useState(new Date())
@@ -104,7 +104,7 @@ export default function Home(props) {
                     text: 'Cancel',
                     style: 'cancel',
                 },
-                { text: 'OK', onPress: () => dispatch(noteActions.delNote(NoteId)) },
+                { text: 'OK', onPress: () => dispatch(workingDayActions.delNote(NoteId)) },
             ]
         )
 
@@ -152,7 +152,7 @@ export default function Home(props) {
                                 NavigationService.navigate('AddNote')
                                 return
                             case '1':
-                                dispatch(noteActions.sendReport(
+                                dispatch(workingDayActions.sendReport(
                                     from.length == 4 ? undefined : from,
                                     to.length == 2 ? undefined : to
                                 ))
@@ -223,13 +223,13 @@ export default function Home(props) {
                             setFrom('from')
                             setTo('to')
                             setHideFilter(false)
-                            dispatch(noteActions.listNotes())
+                            dispatch(workingDayActions.listNotes())
                         }}>
                             <Text style={styles.text}>Clear Filter</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.loginBtn} onPress={() => {
                             setHideFilter(false)
-                            dispatch(noteActions.
+                            dispatch(workingDayActions.
                                 listNotes(
                                     from.length == 4 ? undefined : from,
                                     to.length == 2 ? undefined : to

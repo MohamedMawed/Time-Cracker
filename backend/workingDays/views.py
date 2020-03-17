@@ -85,7 +85,7 @@ class SendReport(APIView):
             notes = Note.objects.filter(workingDay__id=day.get('id'))
             notesList = notes.values()
             day['dayNotes'] = notesList
-        if(to_list.count()==0):
+        if(to_list.count() == 0):
             return Response({'detail': "can't send an empty report"},status=400)            
 
         html_message = render_to_string('mail_template.html', {'notes': to_list})
