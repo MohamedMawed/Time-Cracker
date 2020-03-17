@@ -23,16 +23,16 @@ const NoteCard = ({ Note, onDel, onEdit }) => {
     return (
         <View style={[styles.cardStyle, { backgroundColor: Note.underPWH ? '#ffdbdd' : 'white' }]}>
             <View style={{ flex: 17 }}>
-                <Text>
-                    {Note.note}
-                </Text>
-                <View style={{ height: 2, width: '100%', backgroundColor: 'lightgray', marginVertical: 5 }} />
                 <View style={{
                     flexDirection: 'row',
                 }}>
-                    <Text> Date : {Note.date}</Text>
+                    <Text>Date : {Note.date}</Text>
                     <Text>  # of hours : {Note.hours}</Text>
                 </View>
+                <View style={{ height: 2, width: '100%', backgroundColor: 'lightgray', marginVertical: 5 }} />
+                <Text>
+                    {Note.note}
+                </Text>
             </View>
             <View style={{
                 flex: 2,
