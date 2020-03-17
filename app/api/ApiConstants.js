@@ -7,7 +7,8 @@ const ApiConstants = {
   NOTE_CRUD: 'working-days/',
   SEND_REPORT: 'working-days/sendreport/',
   USER_CRUD: 'auth/users/',
-  PWH: 'auth/users/settings/'
+  PWH: 'auth/users/settings/',
+  USER_WORKING_DAYS : 'working-days/user/',
 }
 
 export default ApiConstants

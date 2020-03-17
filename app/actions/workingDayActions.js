@@ -68,6 +68,19 @@ export function listNotesFailed() {
     };
   }
 
+  export function listWorkingDaysForUser(id){
+    return {
+        type : types.USER_WORKING_DAYS,
+        user_id : id
+    }
+}
+
+export function listWorkingDaysForUserResponse(list){
+    return {
+        type : types.USER_WORKING_DAYS_RESPONSE,
+        userWorkingDays : list
+    }
+}
 
   export function editNote(id, workingDay) {
     return {

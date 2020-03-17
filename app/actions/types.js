@@ -53,3 +53,8 @@ export const USERS_ADD = 'USERS_ADD'
 
 // edit user
 export const USERS_EDIT = 'USERS_EDIT'
+
+
+// working days for user
+export const USER_WORKING_DAYS = 'USER_WORKING_DAYS'
+export const USER_WORKING_DAYS_RESPONSE = 'USER_WORKING_DAYS_RESPONSE'

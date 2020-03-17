@@ -11,7 +11,8 @@ import {
     noteEditSaga,
     changeSettingSaga,
     getSettingSaga,
-    sendReportSaga
+    sendReportSaga,
+    getUserWorkingDaysSaga
 } from './workingDaySaga'
 import { 
     userListSaga,
@@ -35,6 +36,9 @@ export default function* watch() {
         takeLatest(types.PWH, changeSettingSaga),
         takeLatest(types.PWH_GET, getSettingSaga),
         takeLatest(types.WORKING_DAY_EDIT, noteEditSaga),
+
+        // user working days
+        takeLatest(types.USER_WORKING_DAYS, getUserWorkingDaysSaga),
 
         // this is for the user manager type
         takeLatest(types.USERS_REQUEST, userListSaga),

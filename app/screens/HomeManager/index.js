@@ -13,12 +13,14 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 
 
-const UserCard = ({ User, onDel, onEdit }) => {
+const UserCard = ({ User, isStaff, onDel, onEdit }) => {
     let color = 'black', type = 'regular user'
     if (User.is_user_manager) { color = 'blue', type = 'user manager' }
 
     return (
-        <View style={styles.cardStyle}>
+        <TouchableOpacity activeOpacity={.8} onPress={()=>{
+            isStaff ? NavigationService.navigate('UserWorkingDays',{user:User}):null
+        }} style={styles.cardStyle}>
             <Text style={styles.photoContainer}>
                 <MaterialCommunityIcons name="timetable" size={40} color="white" />
             </Text>
@@ -41,7 +43,7 @@ const UserCard = ({ User, onDel, onEdit }) => {
 
             </View>
 
-        </View>
+        </TouchableOpacity>
 
     )
 }
@@ -90,7 +92,7 @@ export default function HomeManager() {
                 refreshing={useresloading}
                 onRefresh={loadUsers}
                 keyExtractor={(item) => item.user_id.toString()}
-                renderItem={({ item }) => <UserCard User={item} onDel={deleteUser} onEdit={editUser} />}
+                renderItem={({ item }) => <UserCard User={item} isStaff={user? user.user.is_staff : false} onDel={deleteUser} onEdit={editUser} />}
             />
 
         </View>

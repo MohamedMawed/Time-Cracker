@@ -6,7 +6,8 @@ import * as types from 'app/actions/types'
 
 const initialState = {
     notes: [],
-    underPWH: 0
+    underPWH: 0,
+    userWorkingDays:[]
 }
 
 export const workingDayReducer = createReducer(initialState, {
@@ -40,6 +41,18 @@ export const workingDayReducer = createReducer(initialState, {
             ...state,
             workingDay_id: action.workingDay_id,
             workingDay: action.workingDay
+        }
+    },
+    [types.USER_WORKING_DAYS](state, action) {
+        return {
+            ...state,
+            user_id: action.user_id
+        }
+    },
+    [types.USER_WORKING_DAYS_RESPONSE](state, action) {
+        return {
+            ...state,
+            userWorkingDays: action.userWorkingDays
         }
     },
     [types.PWH](state, action) {

@@ -2,6 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import Splash from 'app/screens/Splash'
 import HomeManager from 'app/screens/HomeManager'
+import UserWorkingDays from 'app/screens/UserWorkingDays'
 import Register from 'app/screens/Register'
 import Login from 'app/screens/Login'
 import Home from 'app/screens/Home'
@@ -40,6 +41,10 @@ export default function RootStack() {
             <Stack.Screen
                 name="AddNote"
                 component={Note}
+            />
+            <Stack.Screen
+                name="UserWorkingDays"
+                component={UserWorkingDays}
             />
             <Stack.Screen
                 name="EditUser"

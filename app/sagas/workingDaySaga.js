@@ -1,7 +1,7 @@
 
 import { put, call, select } from 'redux-saga/effects'
 
-import { noteList, delNote, editNote, addNote, changePWH, getPWH, sendReport } from 'app/api/methods/workingDayMethods'
+import { noteList, delNote, editNote, addNote, changePWH, getPWH, sendReport, getUserWorkingDays } from 'app/api/methods/workingDayMethods'
 import * as workingDayActions from 'app/actions/workingDayActions'
 import * as authActions from 'app/actions/authActions'
 import NavigationService from '../navigation/NavigationService'
@@ -64,6 +64,21 @@ export function* noteListSaga(action) {
 
     if (response.prefferedWorkingHours) {
       yield put(workingDayActions.getPwhResponse(response.prefferedWorkingHours))
+      yield put(authActions.disableLoader({}))
+    } else {
+      yield put(workingDayActions.getPwhResponse(0))
+      yield put(authActions.disableLoader({}))
+    }
+  }
+
+
+  export function* getUserWorkingDaysSaga(action) {
+    yield put(authActions.enableLoader())
+    let token = yield select(getToken)
+    const response = yield call(getUserWorkingDays, action.user_id, token)
+
+    if (response) {
+      yield put(workingDayActions.listWorkingDaysForUserResponse(response))
       yield put(authActions.disableLoader({}))
     } else {
       yield put(workingDayActions.getPwhResponse(0))

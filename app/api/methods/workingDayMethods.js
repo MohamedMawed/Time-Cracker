@@ -85,6 +85,15 @@ export function changePWH(pwh,token){
     
 }
 
+
+export function getUserWorkingDays(user_id, token){
+    return Api(
+        ApiConstants.USER_WORKING_DAYS+user_id+'/',
+        null,
+        'get',
+        token,
+    )  
+}
 export function getPWH(token){
     return Api(
         ApiConstants.PWH,
