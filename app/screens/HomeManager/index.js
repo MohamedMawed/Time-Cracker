@@ -92,7 +92,7 @@ export default function HomeManager() {
                 refreshing={useresloading}
                 onRefresh={loadUsers}
                 keyExtractor={(item) => item.user_id.toString()}
-                renderItem={({ item }) => <UserCard User={item} isStaff={user? user.user.is_staff : false} onDel={deleteUser} onEdit={editUser} />}
+                renderItem={({ item }) => <UserCard User={item} isStaff={user? user.user.is_staff&&(!item.is_user_manager) : false} onDel={deleteUser} onEdit={editUser} />}
             />
 
         </View>
