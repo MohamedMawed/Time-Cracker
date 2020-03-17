@@ -10,10 +10,11 @@ const styles = StyleSheet.create({
         width: metrics.screenWidth * .3,
     },
     userTextStyle: {
-
+        fontFamily: 'Sen-Regular',
+        fontSize: 14,
     },
     headerText:{ 
-        fontFamily: 'sans-serif-medium',
+        fontFamily: 'Sen-Bold',
         fontSize: 20,
         color: 'white',
         flex: 9 },

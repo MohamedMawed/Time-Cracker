@@ -5,14 +5,14 @@ from django.contrib.auth.models import Group
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('email', 'username', 'is_user_manager')
+    list_display = ('user_id', 'email', 'username', 'is_user_manager')
     fields = ['username', 'email', 'is_user_manager', 'is_staff']
     list_filter = ('is_staff', 'is_user_manager')
 
 admin.site.register(User, UserAdmin)
 
 class SettingAdmin(admin.ModelAdmin):
-    list_display = ('owner', 'prefferedWorkingHours', )
+    list_display = ('id', 'owner', 'prefferedWorkingHours', )
     fields = ['owner', 'prefferedWorkingHours', ]
     
 admin.site.register(Setting, SettingAdmin)

@@ -28,6 +28,17 @@ class workingDayUpdateDestory(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,NotUserManager,) 
     
 
+class ListWorkingDaysForUser(generics.ListAPIView):
+    queryset = WorkingDay.objects.all()
+    serializer_class = WorkingDaySerializer
+    permission_classes = (IsAuthenticated,NotUserManager,)
+
+    def list(self, request, pk=None):
+        queryset = WorkingDay.objects.filter(owner__user_id=pk)
+        serializer = WorkingDaySerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
 class WorkingDaysListCreate(generics.ListCreateAPIView):
     queryset = WorkingDay.objects.all()
     serializer_class = WorkingDaySerializer
