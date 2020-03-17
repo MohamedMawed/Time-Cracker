@@ -6,10 +6,14 @@ from django.core.exceptions import ValidationError
 
 
 class NoteInline(admin.TabularInline):
+    extra = 1
+    initial_num = 1
     model = Note
 
 
 class WorkingDayAdmin(admin.ModelAdmin):
+    extra = 0
+    min_num = 3
     inlines = [
         NoteInline,
     ]

@@ -20,8 +20,11 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 
 const NoteCard = ({ workingDay, onDel, onEdit }) => {
+    let color = 'white'
+    if (workingDay.preferredWorkingHours && workingDay.preferredWorkingHours > workingDay.hours)
+        color = '#ffdbdd'
     return (
-        <View style={[styles.cardStyle, { backgroundColor: workingDay.underPWH ? '#ffdbdd' : 'white' }]}>
+        <View style={[styles.cardStyle, { backgroundColor: color }]}>
             <View style={{ flex: 17 }}>
                 <View style={{
                     flexDirection: 'row',
@@ -32,22 +35,22 @@ const NoteCard = ({ workingDay, onDel, onEdit }) => {
                 <View style={{ height: 2, width: '100%', backgroundColor: 'lightgray', marginVertical: 5 }} />
                 <Text style={styles.notesParent}>Notes :-</Text>
                 <View style={styles.notesContainer}>
-                {
-                    workingDay.dayNotes.map((note , index) => {
-                        return (
-                            <View key={index} style={{
-                                flexDirection: 'row',
-                            }}>
-                                <Text style={[styles.noteItem,{flex:2}]}>
-                                    {index + 1} :-
+                    {
+                        workingDay.dayNotes.map((note, index) => {
+                            return (
+                                <View key={index} style={{
+                                    flexDirection: 'row',
+                                }}>
+                                    <Text style={[styles.noteItem, { flex: 2 }]}>
+                                        {index + 1} :-
                                 </Text>
-                                <Text style={[styles.noteItem,{flex:18}]}>
-                                    {note.note}
-                                </Text>
-                            </View>
-                        )
-                    })
-                }
+                                    <Text style={[styles.noteItem, { flex: 18 }]}>
+                                        {note.note}
+                                    </Text>
+                                </View>
+                            )
+                        })
+                    }
                 </View>
             </View>
             <View style={{
@@ -92,7 +95,7 @@ export default function Home(props) {
 
     useEffect(() => {
         loadNotes()
-    },[])
+    }, [])
     const deleteWorkingDay = (NoteId) => {
         Alert.alert(
             'Delete Working Day',
@@ -130,7 +133,7 @@ export default function Home(props) {
         <View style={styles.container}>
             {/* this is the header compontent */}
             <View style={styles.headerStyle}>
-                <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 12 }}>{user ? user.user.username:''}</Text>
+                <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 12 }}>{user ? user.user.username : ''}</Text>
                 <FontAwesome5 onPress={() => setHideFilter(true)} style={{ flex: 2 }} name="filter" size={25} color="white" />
                 <ModalDropdown
                     textStyle={{ fontSize: 50, color: 'white', textAlignVertical: 'top', width: '100%', height: 100 }}
