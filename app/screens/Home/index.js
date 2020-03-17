@@ -19,20 +19,36 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 
 
-const NoteCard = ({ Note, onDel, onEdit }) => {
+const NoteCard = ({ workingDay, onDel, onEdit }) => {
     return (
-        <View style={[styles.cardStyle, { backgroundColor: Note.underPWH ? '#ffdbdd' : 'white' }]}>
+        <View style={[styles.cardStyle, { backgroundColor: workingDay.underPWH ? '#ffdbdd' : 'white' }]}>
             <View style={{ flex: 17 }}>
                 <View style={{
                     flexDirection: 'row',
                 }}>
-                    <Text>Date : {Note.date}</Text>
-                    <Text>  # of hours : {Note.hours}</Text>
+                    <Text style={styles.dateText}>Date : {workingDay.date}</Text>
+                    <Text style={styles.dateText}>  # of hours : {workingDay.hours}</Text>
                 </View>
                 <View style={{ height: 2, width: '100%', backgroundColor: 'lightgray', marginVertical: 5 }} />
-                <Text>
-                    {Note.note}
-                </Text>
+                <Text style={styles.notesParent}>Notes :-</Text>
+                <View style={styles.notesContainer}>
+                {
+                    workingDay.dayNotes.map((note , index) => {
+                        return (
+                            <View key={index} style={{
+                                flexDirection: 'row',
+                            }}>
+                                <Text style={[styles.noteItem,{flex:2}]}>
+                                    {index + 1} :-
+                                </Text>
+                                <Text style={[styles.noteItem,{flex:18}]}>
+                                    {note.note}
+                                </Text>
+                            </View>
+                        )
+                    })
+                }
+                </View>
             </View>
             <View style={{
                 flex: 2,
@@ -40,11 +56,11 @@ const NoteCard = ({ Note, onDel, onEdit }) => {
                 alignItems: 'center'
             }}>
                 <Ionicons
-                    onPress={() => onDel(Note.id)}
+                    onPress={() => onDel(workingDay.id)}
                     name="ios-close-circle"
                     size={30}
                     color="red" />
-                <MaterialIcons onPress={() => onEdit(Note)} style={{ flex: 2 }} name="edit" size={25} color="green" />
+                <MaterialIcons onPress={() => onEdit(workingDay)} style={{ flex: 2 }} name="edit" size={25} color="green" />
 
             </View>
         </View>
@@ -66,7 +82,6 @@ export default function Home(props) {
     const [notesloading, setNotesloading] = useState(false)
     const [preferredWorkingHours, setPreferredWorkingHours] = useState(pwh)
     const loadNotes = () => dispatch(noteActions.listNotes())
-    const getPWH = () => dispatch(noteActions.getPWH())
 
 
     const [date, setDate] = useState(new Date())
@@ -77,13 +92,11 @@ export default function Home(props) {
 
     useEffect(() => {
         loadNotes()
-        getPWH()
-        setPreferredWorkingHours(pwh)
-    }, [pwh])
-    const deleteNote = (NoteId) => {
+    },[])
+    const deleteWorkingDay = (NoteId) => {
         Alert.alert(
-            'Delete Note',
-            'Are you sure to delete this note ?',
+            'Delete Working Day',
+            'Are you sure to delete that day ?',
             [
                 {
                     text: 'Cancel',
@@ -95,7 +108,7 @@ export default function Home(props) {
 
     }
 
-    const editNote = (Note) => {
+    const editWorkingDay = (Note) => {
         NavigationService.navigate("AddNote", { Note })
     }
 
@@ -106,7 +119,6 @@ export default function Home(props) {
         setDate(currentDate)
         if (fromOrTo) setFrom(selectedDate.toISOString().split('T')[0].toString())
         else setTo(selectedDate.toISOString().split('T')[0].toString())
-
     }
 
 
@@ -158,7 +170,7 @@ export default function Home(props) {
                 refreshing={notesloading}
                 onRefresh={loadNotes}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => <NoteCard Note={item} onDel={deleteNote} onEdit={editNote} />}
+                renderItem={({ item }) => <NoteCard workingDay={item} onDel={deleteWorkingDay} onEdit={editWorkingDay} />}
             />
 
             {/* adding prefered working hours modal (by date) */}

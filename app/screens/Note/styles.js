@@ -17,12 +17,12 @@ const styles = StyleSheet.create({
         width: metrics.screenWidth,
         alignItems: 'center'
     },
-    dateField:{
-        width:metrics.screenWidth*.4,
-        height:55,
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:'orange'
+    dateField: {
+        width: metrics.screenWidth * .4,
+        height: 55,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'orange'
     },
     headerStyle: {
         width: '100%',
@@ -36,12 +36,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     headerText: {
-        fontFamily: 'sans-serif-medium',
+        fontFamily: 'Sen-Bold',
         fontSize: 25,
         color: 'white'
     },
     saveBtn: {
-        marginTop: metrics.screenHeight * .1,
+        marginTop: metrics.screenHeight * .05,
         backgroundColor: 'green',
         borderRadius: 3,
         color: '#ffffff',
@@ -59,6 +59,48 @@ const styles = StyleSheet.create({
     },
     seperator1: {
         height: 20,
+    },
+    notesContainer: {
+        width: metrics.screenWidth * .835,
+        height: 60,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: 'blue',
+        flexDirection: 'row',
+    },
+    parentText: {
+        fontSize: 20,
+        color: 'white',
+        fontFamily: 'Sen-Bold',
+        marginLeft: 5
+    },
+    parentBtn: {
+        width: 60,
+        height: 60,
+        backgroundColor: 'green',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    noteContainer: {
+        width: metrics.screenWidth * .835,
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        flexDirection: 'row',
+        marginTop: 10,
+    },
+    parentRemoveBtn: {
+        width: 55,
+        height: 55,
+        marginBottom: 8,
+        backgroundColor: 'red',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    titleText: {
+        fontFamily: 'Sen-Bold',
+        fontSize: 18,
+        textAlign: 'center',
+        flex: 1
     },
 });
 

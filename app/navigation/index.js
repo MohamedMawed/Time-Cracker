@@ -5,10 +5,8 @@ import HomeManager from 'app/screens/HomeManager'
 import Register from 'app/screens/Register'
 import Login from 'app/screens/Login'
 import Home from 'app/screens/Home'
-import AddNote from 'app/screens/AddNote'
-import EditNote from 'app/screens/EditNote'
-import AddUser from 'app/screens/AddUser'
-import EditUser from 'app/screens/EditUser'
+import Note from 'app/screens/Note'
+import User from 'app/screens/User'
 
 const Stack = createStackNavigator()
 
@@ -16,7 +14,7 @@ export default function RootStack() {
     return (
         <Stack.Navigator
             headerMode="none"
-            initialRouteName="Splash"
+            initialRouteName="AddNote"
             screenOptions={{ gestureEnabled: false }}
         >
             <Stack.Screen
@@ -41,15 +39,11 @@ export default function RootStack() {
             />
             <Stack.Screen
                 name="AddNote"
-                component={AddNote}
-            />
-            <Stack.Screen
-                name="EditNote"
-                component={EditNote}
+                component={Note}
             />
             <Stack.Screen
                 name="EditUser"
-                component={EditUser}
+                component={User}
             />
 
         </Stack.Navigator>

@@ -32,18 +32,14 @@ export const noteReducer = createReducer(initialState, {
     [types.NOTES_ADD](state, action) {
         return {
             ...state,
-            note_id: action.note_id,
-            note: action.note,
-            start: action.start,
-            end: action.end,
+            note: action.note
         }
     },
     [types.NOTES_EDIT](state, action) {
         return {
             ...state,
-            note: action.note,
-            start: action.start,
-            end: action.end,
+            note_id: action.note_id,
+            note: action.note
         }
     },
     [types.PWH](state, action) {

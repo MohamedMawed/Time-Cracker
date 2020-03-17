@@ -9,6 +9,28 @@ const styles = StyleSheet.create({
     input: {
         width: metrics.screenWidth * .3,
     },
+    notesParent: {
+        fontSize:18,
+        marginTop:10,
+        marginBottom:5,
+        fontFamily:'Sen-Bold'
+    },
+    notesContainer: {
+        paddingLeft:20,
+        borderRadius:4,
+        elevation:1,
+        backgroundColor:'lightgray',
+    },
+    dateText: {
+        fontFamily:'Sen-Bold',
+        fontSize:18
+    },
+    noteItem: {
+        color:'black',
+        marginVertical:5,
+        fontSize:16,
+        fontFamily:'Sen-Regular'
+    },
     cardStyle:{
         width: metrics.screenWidth * .95,
         borderRadius: 4,

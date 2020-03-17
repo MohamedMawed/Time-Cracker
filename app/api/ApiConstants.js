@@ -4,10 +4,8 @@ const ApiConstants = {
   BASE_URL: 'http://192.168.1.10:8000/api/',
   LOGIN: 'auth/login/',
   REGISTER: 'auth/register/',
-  NOTE_CRUD: 'notes/',
-  PWH: 'pwh/',
-  SEND_REPORT: 'note/sendreport/',
-  PWH_TODAY: 'pwh/today/',
+  NOTE_CRUD: 'working-days/',
+  SEND_REPORT: 'working-days/sendreport/',
   USER_CRUD: 'auth/users/'
 };
 
