@@ -73,8 +73,7 @@ const NoteCard = ({ workingDay, onDel, onEdit }) => {
 export default function Home(props) {
     const dispatch = useDispatch()
     const data = [
-        'Add Note',
-        'Settings',
+        'Add Working Day',
         'Send A Report',
         'Logout']
     const notes = useSelector(state => state.noteReducer.notes)
@@ -133,10 +132,16 @@ export default function Home(props) {
         <View style={styles.container}>
             {/* this is the header compontent */}
             <View style={styles.headerStyle}>
-                <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20, color: 'white', flex: 12 }}>{user ? user.user.username : ''}</Text>
+                <Text style={{ fontFamily: 'Sen-Bold', fontSize: 20, color: 'white', flex: 12 }}>{user ? user.user.username : ''}</Text>
                 <FontAwesome5 onPress={() => setHideFilter(true)} style={{ flex: 2 }} name="filter" size={25} color="white" />
                 <ModalDropdown
-                    textStyle={{ fontSize: 50, color: 'white', textAlignVertical: 'top', width: '100%', height: 100 }}
+                    dropdownTextStyle={{
+                        fontFamily: 'Sen-Regular',
+                        fontSize: 16
+                    }}
+                    dropdownTextHighlightStyle={{
+                        color: 'gray'
+                    }}
                     Style={{ flex: 2 }}
                     dropdownStyle={{ height: 'auto' }}
                     animated={false}
@@ -176,29 +181,6 @@ export default function Home(props) {
                 renderItem={({ item }) => <NoteCard workingDay={item} onDel={deleteWorkingDay} onEdit={editWorkingDay} />}
             />
 
-            {/* adding prefered working hours modal (by date) */}
-            <Modal isVisible={HidePWH}>
-                <View style={{ height: metrics.screenHeight * .25, alignItems: 'flex-end', justifyContent: 'space-between', backgroundColor: 'white', borderRadius: 4, padding: 10 }}>
-                    <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 25, color: 'blue', }}>Settings</Text>
-                        <Ionicons
-                            onPress={() => setHidePWH(false)}
-                            name="ios-close-circle"
-                            size={30}
-                            color="red" />
-                    </View>
-                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-evenly' }}>
-                        <Text style={{ fontFamily: 'sans-serif-medium', fontSize: 20 }}>Today Preferred Working Hours</Text>
-                        <Switch value={preferredWorkingHours} onValueChange={(value) => setPreferredWorkingHours(value)} />
-                    </View>
-                    <TouchableOpacity style={styles.loginBtn} onPress={() => {
-                        dispatch(noteActions.changePWH(preferredWorkingHours))
-                        setHidePWH(false)
-                    }}>
-                        <Text style={styles.text}>Save</Text>
-                    </TouchableOpacity>
-                </View>
-            </Modal>
             {/* filter data modal (by date) */}
             <Modal isVisible={hideFilter}>
                 <View style={{ height: metrics.screenHeight * .25, alignItems: 'flex-end', justifyContent: 'space-between', backgroundColor: 'white', borderRadius: 4, padding: 10 }}>

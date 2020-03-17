@@ -1,0 +1,24 @@
+
+
+
+{% for sum in notes %}
+        <p>
+            * Date: {{sum.date}}
+        </p>
+        <p>
+            * Total time: {{sum.hours}}h
+        </p>
+        <p>
+            * Notes:
+        </p>
+        <ul>
+        {% for note in sum.dayNotes %}
+            <li>
+                {{note.note}}
+            </li>
+        {% endfor %}
+        </ul>
+
+{% empty %}
+    <p>Nothing to show.</p>
+{% endfor %}

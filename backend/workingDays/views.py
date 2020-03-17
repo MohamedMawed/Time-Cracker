@@ -78,22 +78,17 @@ class SendReport(APIView):
         if toDate:
             queryset = queryset.filter(date__lte=toDate)
 
-        get_attr = operator.attrgetter('date')
-        new_list = [list(g) for k, g in itertools.groupby(sorted(list(queryset), key=get_attr), get_attr)]
-        summary = []
-        for cat in new_list:
-            sum = {
-                'date' : '',
-                'totaltime': 0,
-                'notes': []
-            }
-            sum['notes'] = cat
-            for note in cat:
-                sum['totaltime'] += note.hours
-                sum['date'] = note.date
-            summary.append(sum)
+        to_list = queryset.values()
 
-        html_message = render_to_string('mail_template.html', {'notes': summary})
+
+        for day in to_list:
+            notes = Note.objects.filter(workingDay__id=day.get('id'))
+            notesList = notes.values()
+            day['dayNotes'] = notesList
+        if(to_list.count()==0):
+            return Response({'message': "can't send an empty report"},status=400)            
+
+        html_message = render_to_string('mail_template.html', {'notes': to_list})
         send_mail(
         'Your Requested Report',
         html_message,
@@ -102,4 +97,4 @@ class SendReport(APIView):
         fail_silently=False,
         html_message=html_message
         )
-        return Response({})            
+        return Response({'message': 'report created'},status=201)            
