@@ -13,63 +13,66 @@ export function sendReport(from, to) {
 }
 export function listNotes(from, to) {
     return {
-        type: types.NOTES_REQUEST,
+        type: types.WORKING_DAY_REQUEST,
         from: from,
         to: to
     };
 }
 
+export function changeSetting(pwh) {
+    return {
+        type: types.PWH,
+        pwh: pwh
+    }
+}
+
+export function getSettings() {
+    return {
+        type: types.PWH_GET,
+    }
+}
+export function getPwhResponse(pwh) {
+    return {
+        type: types.PWH_RESULT,
+        pwh: pwh
+    }
+}
+
+
+
+
 export function listNotesFailed() {
     return {
-      type: types.NOTES_FAILED,
+      type: types.WORKING_DAY_FAILED,
     };
   }
   
   export function onlistNotesResponse(response) {
     return {
-      type: types.NOTES_RESPONSE,
+      type: types.WORKING_DAY_RESPONSE,
       response,
     };
   }
 
   export function delNote(id) {
     return {
-      type: types.NOTES_DELETE,
-      note_id : id
+      type: types.WORKING_DAY_DELETE,
+      workingDay_id : id
     };
   }
 
-  export function addNote(note) {
+  export function addNote(workingDay) {
     return {
-      type: types.NOTES_ADD,
-      note : note
+      type: types.WORKING_DAY_ADD,
+      workingDay : workingDay
     };
   }
 
-  export function editNote(id , note) {
+
+  export function editNote(id, workingDay) {
     return {
-      type: types.NOTES_EDIT,
-      note_id : id,
-      note : note
+      type: types.WORKING_DAY_EDIT,
+      workingDay_id : id,
+      workingDay : workingDay
     };
   }
-
-  export function changePWH(PWH){
-    return {
-        type: types.PWH,
-        PWH:PWH
-    }
-}
-export function getPWH(){
-    return {
-        type: types.PWH_GET,
-    }
-}
-
-export function setTodayPWH(pwh){
-    return {
-        type: types.PWH_RESULT,
-        pwh : pwh
-    }
-}
-  

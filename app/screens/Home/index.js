@@ -19,9 +19,9 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 
 
-const NoteCard = ({ workingDay, onDel, onEdit }) => {
+const NoteCard = ({ workingDay, onDel, PWH, onEdit }) => {
     let color = 'white'
-    if (workingDay.preferredWorkingHours && workingDay.preferredWorkingHours > workingDay.hours)
+    if (PWH && PWH > workingDay.hours)
         color = '#ffdbdd'
     return (
         <View style={[styles.cardStyle, { backgroundColor: color }]}>
@@ -64,7 +64,6 @@ const NoteCard = ({ workingDay, onDel, onEdit }) => {
                     size={30}
                     color="red" />
                 <MaterialIcons onPress={() => onEdit(workingDay)} style={{ flex: 2 }} name="edit" size={25} color="green" />
-
             </View>
         </View>
 
@@ -74,6 +73,7 @@ export default function Home(props) {
     const dispatch = useDispatch()
     const data = [
         'Add Working Day',
+        'Settings',
         'Send A Report',
         'Logout']
     const notes = useSelector(state => state.workingDayReducer.notes)
@@ -84,6 +84,7 @@ export default function Home(props) {
     const [notesloading, setNotesloading] = useState(false)
     const [preferredWorkingHours, setPreferredWorkingHours] = useState(pwh)
     const loadNotes = () => dispatch(workingDayActions.listNotes())
+    const loadSettings = () => dispatch(workingDayActions.getSettings())
 
 
     const [date, setDate] = useState(new Date())
@@ -94,6 +95,7 @@ export default function Home(props) {
 
     useEffect(() => {
         loadNotes()
+        loadSettings()
     }, [])
     const deleteWorkingDay = (NoteId) => {
         Alert.alert(
@@ -107,7 +109,6 @@ export default function Home(props) {
                 { text: 'OK', onPress: () => dispatch(workingDayActions.delNote(NoteId)) },
             ]
         )
-
     }
 
     const editWorkingDay = (Note) => {
@@ -152,12 +153,15 @@ export default function Home(props) {
                                 NavigationService.navigate('AddNote')
                                 return
                             case '1':
+                                setHidePWH(true)
+                                return
+                            case '2':
                                 dispatch(workingDayActions.sendReport(
                                     from.length == 4 ? undefined : from,
                                     to.length == 2 ? undefined : to
                                 ))
                                 return
-                            case '2':
+                            case '3':
                                 NavigationService.reset('Login')
                                 dispatch(authActions.Logout())
                                 return
@@ -175,8 +179,47 @@ export default function Home(props) {
                 refreshing={notesloading}
                 onRefresh={loadNotes}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => <NoteCard workingDay={item} onDel={deleteWorkingDay} onEdit={editWorkingDay} />}
+                renderItem={({ item }) => <NoteCard workingDay={item} PWH={pwh} onDel={deleteWorkingDay} onEdit={editWorkingDay} />}
             />
+
+            {/* adding prefered working hours modal (by date) */}
+            <Modal isVisible={HidePWH}>
+                <View style={{ height: metrics.screenHeight * .3, alignItems: 'flex-end', justifyContent: 'space-between', backgroundColor: 'white', borderRadius: 4, padding: 10 }}>
+                    <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ fontFamily: 'Sen-Bold', fontSize: 25, color: 'blue', }}>Settings</Text>
+                        <Ionicons
+                            onPress={() => setHidePWH(false)}
+                            name="ios-close-circle"
+                            size={30}
+                            color="red" />
+                    </View>
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-evenly' }}>
+                    <View>
+                        <Text style={{
+                            fontFamily: 'Sen-Regular',
+                            fontSize:18,
+                            marginBottom: 10,
+                        }}>Preffered Working Hours on this day</Text>
+                     
+                        <OutlinedTextField
+                            containerStyle={{ width: metrics.screenWidth * .843 }}
+                            keyboardType='numeric'
+                            label='Preffered Working Hours'
+                            onChangeText={(text) => {
+                                setPreferredWorkingHours( text )
+                            }}
+                            value={pwh + ''}
+                        />
+                    </View>
+                    </View>
+                    <TouchableOpacity style={styles.loginBtn} onPress={() => {
+                        dispatch(workingDayActions.changeSetting(preferredWorkingHours))
+                        setHidePWH(false)
+                    }}>
+                        <Text style={styles.text}>Save</Text>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
 
             {/* filter data modal (by date) */}
             <Modal isVisible={hideFilter}>
@@ -229,7 +272,7 @@ export default function Home(props) {
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.loginBtn} onPress={() => {
                             setHideFilter(false)
-                            dispatch(workingDayActions.
+                            dispatch(workingDayActions. 
                                 listNotes(
                                     from.length == 4 ? undefined : from,
                                     to.length == 2 ? undefined : to

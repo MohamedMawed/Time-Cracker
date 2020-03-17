@@ -105,23 +105,7 @@ export default function AddNote({ route }) {
                             value={hours + ''}
                         />
                     </View>
-                    <View style={styles.seperator1} />
-                    <View>
-                        <Text style={{
-                            fontFamily: 'Sen-Regular',
-                            fontSize:14
-                        }}>Preffered Working Hours on this day</Text>
-                    <View style={styles.seperator} />
-                        <OutlinedTextField
-                            containerStyle={{ width: metrics.screenWidth * .843 }}
-                            keyboardType='numeric'
-                            label='Preffered Working Hours'
-                            onChangeText={(text) => {
-                                setNote({ ...note, preferredWorkingHours: text })
-                            }}
-                            value={preferredWorkingHours + ''}
-                        />
-                    </View>
+                    
                     <View style={styles.seperator1} />
                     <View style={styles.notesContainer}>
                         <Text style={styles.parentText}>*Notes</Text>

@@ -17,7 +17,7 @@ class WorkingDayAdmin(admin.ModelAdmin):
     inlines = [
         NoteInline,
     ]
-    list_display = ('id', 'date', 'owner', 'hours', 'preferredWorkingHours')
+    list_display = ('id', 'date', 'owner', 'hours',)
 
 admin.site.register(WorkingDay, WorkingDayAdmin)
 

@@ -6,7 +6,8 @@ const ApiConstants = {
   REGISTER: 'auth/register/',
   NOTE_CRUD: 'working-days/',
   SEND_REPORT: 'working-days/sendreport/',
-  USER_CRUD: 'auth/users/'
+  USER_CRUD: 'auth/users/',
+  PWH: 'auth/users/settings/'
 }
 
 export default ApiConstants

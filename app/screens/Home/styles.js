@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
         height: 50
     },
     text: {
+        fontFamily: 'Sen-Bold',
         fontSize: 20,
         color: 'white'
     },

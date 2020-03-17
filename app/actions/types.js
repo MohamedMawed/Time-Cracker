@@ -19,17 +19,17 @@ export const REGISTER_REQUEST = 'REGISTER_REQUEST'
 export const SEND_REPORT = 'SEND_REPORT'
 
 // note list
-export const NOTES_REQUEST = 'NOTES_REQUEST'
-export const NOTES_RESPONSE = 'NOTES_RESPONSE'
+export const WORKING_DAY_REQUEST = 'WORKING_DAY_REQUEST'
+export const WORKING_DAY_RESPONSE = 'WORKING_DAY_RESPONSE'
 
 // delete note
-export const NOTES_DELETE = 'NOTES_DELETE'
+export const WORKING_DAY_DELETE = 'WORKING_DAY_DELETE'
 
 // add note
-export const NOTES_ADD = 'NOTES_ADD'
+export const WORKING_DAY_ADD = 'WORKING_DAY_ADD'
 
 // edit note
-export const NOTES_EDIT = 'NOTES_EDIT'
+export const WORKING_DAY_EDIT = 'WORKING_DAY_EDIT'
 
 // note PWH for changing the preferred working hours
 export const PWH = 'PWH'

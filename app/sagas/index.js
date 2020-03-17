@@ -9,6 +9,8 @@ import {
     noteDelSaga,
     noteAddSaga,
     noteEditSaga,
+    changeSettingSaga,
+    getSettingSaga,
     sendReportSaga
 } from './workingDaySaga'
 import { 
@@ -27,15 +29,16 @@ export default function* watch() {
         takeLatest(types.SEND_REPORT, sendReportSaga),
 
         // this is for the note CRUD for regular user
-        takeLatest(types.NOTES_REQUEST, noteListSaga),
-        takeLatest(types.NOTES_DELETE, noteDelSaga),
-        takeLatest(types.NOTES_ADD, noteAddSaga),
-        takeLatest(types.NOTES_EDIT, noteEditSaga),
+        takeLatest(types.WORKING_DAY_REQUEST, noteListSaga),
+        takeLatest(types.WORKING_DAY_DELETE, noteDelSaga),
+        takeLatest(types.WORKING_DAY_ADD, noteAddSaga),
+        takeLatest(types.PWH, changeSettingSaga),
+        takeLatest(types.PWH_GET, getSettingSaga),
+        takeLatest(types.WORKING_DAY_EDIT, noteEditSaga),
 
         // this is for the user manager type
         takeLatest(types.USERS_REQUEST, userListSaga),
         takeLatest(types.USERS_DELETE, userDelSaga),
-        takeLatest(types.USERS_ADD, userAddSaga),
         takeLatest(types.USERS_EDIT, userEditSaga),
     ]);
 }

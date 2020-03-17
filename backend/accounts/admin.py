@@ -11,6 +11,11 @@ class UserAdmin(admin.ModelAdmin):
 
 admin.site.register(User, UserAdmin)
 
+class SettingAdmin(admin.ModelAdmin):
+    list_display = ('owner', 'prefferedWorkingHours', )
+    fields = ['owner', 'prefferedWorkingHours', ]
+    
+admin.site.register(Setting, SettingAdmin)
 
 admin.site.site_header = "Time Cracker Administration"
 admin.site.site_title = "Time Cracker Administration"

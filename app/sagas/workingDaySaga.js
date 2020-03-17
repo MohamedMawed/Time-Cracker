@@ -43,7 +43,34 @@ export function* noteListSaga(action) {
     }
   }
 
+  export function* changeSettingSaga(action) {
+    yield put(authActions.enableLoader())
+    let token = yield select(getToken)
+    const response = yield call(changePWH, action.pwh, token)
 
+    if (response.settings) {
+      yield put(workingDayActions.listNotes())
+      yield put(workingDayActions.getSettings())
+      yield put(authActions.disableLoader({}))
+    } else {
+      yield put(authActions.disableLoader({}))
+    }
+  }
+
+  export function* getSettingSaga(action) {
+    yield put(authActions.enableLoader())
+    let token = yield select(getToken)
+    const response = yield call(getPWH, token)
+
+    if (response.prefferedWorkingHours) {
+      yield put(workingDayActions.getPwhResponse(response.prefferedWorkingHours))
+      yield put(authActions.disableLoader({}))
+    } else {
+      yield put(authActions.disableLoader({}))
+    }
+  }
+
+  
   export function* noteDelSaga(action) {
     yield put(authActions.enableLoader())
     let token = yield select(getToken)
@@ -61,7 +88,7 @@ export function* noteListSaga(action) {
   export function* noteAddSaga(action) {
     yield put(authActions.enableLoader())
     let token = yield select(getToken)
-    const response = yield call(addNote, action.note, token)
+    const response = yield call(addNote, action.workingDay, token)
     if (!response.details) {
       yield put(workingDayActions.listNotes())
       yield put(authActions.disableLoader({}))
@@ -76,7 +103,7 @@ export function* noteListSaga(action) {
   export function* noteEditSaga(action) {
     yield put(authActions.enableLoader())
     let token = yield select(getToken)
-    const response = yield call(editNote, action.note_id, action.note, token)
+    const response = yield call(editNote, action.workingDay_id, action.workingDay, token)
     
     if (response) {
       yield put(workingDayActions.listNotes())

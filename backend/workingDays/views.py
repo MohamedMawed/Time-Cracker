@@ -51,7 +51,6 @@ class WorkingDaysListCreate(generics.ListCreateAPIView):
             workingDay, created = WorkingDay.objects.get_or_create(
                 date=serializer.validated_data['date'],
                 hours=serializer.validated_data['hours'],
-                preferredWorkingHours=serializer.validated_data['preferredWorkingHours'],
                 owner=request.user,
             )
             if not created:
@@ -79,8 +78,6 @@ class SendReport(APIView):
             queryset = queryset.filter(date__lte=toDate)
 
         to_list = queryset.values()
-
-
         for day in to_list:
             notes = Note.objects.filter(workingDay__id=day.get('id'))
             notesList = notes.values()

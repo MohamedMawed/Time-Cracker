@@ -73,11 +73,11 @@ export function editNote(id, workingDay, token) {
     )
 }
 
-export function changePWH(token){
+export function changePWH(pwh,token){
     return Api(
         ApiConstants.PWH,
         {
-            'date':new Date().toISOString().split('T')[0]
+            'prefferedWorkingHours': pwh
         },
         'post',
         token,
@@ -87,7 +87,7 @@ export function changePWH(token){
 
 export function getPWH(token){
     return Api(
-        ApiConstants.PWH_TODAY,
+        ApiConstants.PWH,
         null,
         'get',
         token,

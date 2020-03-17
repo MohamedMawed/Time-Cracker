@@ -6,46 +6,46 @@ import * as types from 'app/actions/types'
 
 const initialState = {
     notes: [],
-    underPWH: false
+    underPWH: 0
 }
 
 export const workingDayReducer = createReducer(initialState, {
-    [types.NOTES_REQUEST](state, action) {
+    [types.WORKING_DAY_REQUEST](state, action) {
         return {
             ...state,
             from: action.from,
             to: action.to
         }
     },
-    [types.NOTES_RESPONSE](state, action) {
+    [types.WORKING_DAY_RESPONSE](state, action) {
         return {
             ...state,
             notes: action.response,
         }
     },
-    [types.NOTES_DELETE](state, action) {
+    [types.WORKING_DAY_DELETE](state, action) {
         return {
             ...state,
             note_id: action.note_id
         }
     },
-    [types.NOTES_ADD](state, action) {
+    [types.WORKING_DAY_ADD](state, action) {
         return {
             ...state,
-            note: action.note
+            workingDay: action.workingDay
         }
     },
-    [types.NOTES_EDIT](state, action) {
+    [types.WORKING_DAY_EDIT](state, action) {
         return {
             ...state,
-            note_id: action.note_id,
-            note: action.note
+            workingDay_id: action.workingDay_id,
+            workingDay: action.workingDay
         }
     },
     [types.PWH](state, action) {
         return {
             ...state,
-            PWH: action.PWH
+            pwh: action.pwh
         }
     },
     [types.PWH_GET](state, action) {

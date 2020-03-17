@@ -12,14 +12,13 @@ class WorkingDaySerializer(serializers.ModelSerializer):
     dayNotes = DayNoteSerializer(many=True)
     class Meta:
         model = WorkingDay
-        fields = ['id', 'date', 'hours', 'owner', 'preferredWorkingHours', 'dayNotes']
+        fields = ['id', 'date', 'hours', 'owner', 'dayNotes']
     
     def update(self, instance, validated_data):
         Note.objects.filter(workingDay_id=instance.id).delete()
         notes_validated_data = validated_data.pop('dayNotes')
         instance.date = validated_data.get('date', instance.date)
         instance.hours = validated_data.get('hours', instance.hours)
-        instance.preferredWorkingHours = validated_data.get('preferredWorkingHours', instance.preferredWorkingHours)
         instance.save()
         for each in notes_validated_data:
             each['workingDay'] = instance
