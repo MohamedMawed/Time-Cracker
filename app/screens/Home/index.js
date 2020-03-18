@@ -118,7 +118,7 @@ export default function Home(props) {
     const onChange = (event, selectedDate) => {
         if (!selectedDate) return // if the user click cancel for the date time picker
         const currentDate = selectedDate || date
-        setShow(Platform.OS === 'ios')
+        setShow(false)
         setDate(currentDate)
         if (fromOrTo) setFrom(selectedDate.toISOString().split('T')[0].toString())
         else setTo(selectedDate.toISOString().split('T')[0].toString())
